@@ -16205,12 +16205,29 @@ v.onended=()=>{if(t===okn)lock=0};
 v.play().catch(()=>{if(t===okn)lock=0});
 }catch(e){lock=0}
 }
+function afShowFinalCtaV28(){
+let old=root.querySelector('#afFinalCtaV28');
+if(old)old.remove();
+let wrap=document.createElement('div');
+wrap.id='afFinalCtaV28';
+wrap.className='af-final-cta-v28';
+wrap.innerHTML=''
++'<div class="af-final-cta-card-v28">'
++'<div class="af-final-score-v28">MISSION COMPLETE</div>'
++'<h2>이제 어피니티 유니버스로<br>모험을 떠나볼까요? 🚀</h2>'
++'<p>아래 버튼을 눌러 다음 모험을 시작해보세요.</p>'
++'<div class="af-final-arrow-v28" aria-hidden="true"><span>↓</span></div>'
++'<a class="af-final-link-v28" href="https://pf.kakao.com/_xhbxdib" target="_blank" rel="noopener noreferrer">어피니티 유니버스 만나러 가기</a>'
++'</div>';
+root.appendChild(wrap);
+requestAnimationFrame(()=>wrap.classList.add('show'));
+}
 function done(){
 try{speechSynthesis&&speechSynthesis.cancel&&speechSynthesis.cancel()}catch(e){}
 oldOff();
 let t=++okn;
 lock=Date.now()+3400;
-paintPraise('Mission complete!',true);
+paintPraise('100점!',true);
 setTimeout(()=>burst(132,205),260);
 
 try{
@@ -16670,7 +16687,7 @@ let v=sm.querySelector('svg');if(v)v.style.cssText+=';animation:none!important;f
 return r;
 };
 playSuccessVoice=()=>ok();cheer=()=>ok();celebrate=()=>ok();['afV98Ppororong','afV39PlayAudio','afV39PlaySuccessVoice','afV50PlayMissionCompleteSound','afV52PlayMissionCompleteSound'].forEach(k=>{try{window[k]=()=>ok()}catch(e){}});primeSuccessVoices=()=>{S.forEach(a=>{try{new Audio(a.src).load()}catch(e){}});try{FA.muted=true;let p=FA.play();if(p&&p.then)p.then(()=>{FA.pause();FA.currentTime=0;FA.muted=false}).catch(()=>{FA.muted=false;FA.load()});else{FA.pause();FA.currentTime=0;FA.muted=false}}catch(e){try{FA.muted=false;FA.load()}catch(x){}}};
-complete=function(){hideCoach();missionStep.textContent='완료';missionTitle.textContent='튜토리얼 완료!';missionDesc.textContent='이제 어피니티 유니버스로 모험을 떠나볼까요?🚀';done()};
+complete=function(){hideCoach();missionStep.textContent='완료';missionTitle.textContent='100점!';missionDesc.textContent='이제 어피니티 유니버스로 모험을 떠나볼까요? 🚀';done();setTimeout(afShowFinalCtaV28,2850)};
 build();hideTips();btn();renderMission();guide(cur());
 })();
 
@@ -20119,5 +20136,492 @@ html body #af-tutorial #afStart #afStartBtn{
 }
 </style>
 
+
+<style>
+#af-tutorial .af-layer-order-toolbar-v21{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:10px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,#3c3c40 0%,#353538 100%);
+  position:relative;
+  z-index:25;
+}
+#af-tutorial .af-layer-order-head-v21{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+#af-tutorial .af-layer-order-title-v21{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+#af-tutorial .af-layer-order-title-v21 strong{
+  font-size:13px;
+  font-weight:900;
+  color:#fff;
+  line-height:1.1;
+}
+#af-tutorial .af-layer-order-title-v21 span{
+  font-size:11px;
+  font-weight:800;
+  color:#bfdbfe;
+  line-height:1.2;
+}
+#af-tutorial .af-layer-order-grid-v21{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+#af-tutorial .af-layer-order-btn-v21{
+  min-width:0;
+  border:0;
+  border-radius:12px;
+  background:#202124;
+  color:#fff;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:9px 6px 8px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 4px 10px rgba(0,0,0,.18);
+  transition:transform .12s ease, background .12s ease, outline-color .12s ease;
+}
+#af-tutorial .af-layer-order-btn-v21:hover{
+  background:#111827;
+  outline:2px solid rgba(125,211,252,.9);
+}
+#af-tutorial .af-layer-order-btn-v21:active{
+  transform:translateY(1px);
+}
+#af-tutorial .af-layer-order-btn-v21 svg{
+  width:22px;
+  height:22px;
+  display:block;
+  color:#dbeafe;
+  flex:0 0 auto;
+}
+#af-tutorial .af-layer-order-btn-v21 b{
+  font-size:11px;
+  line-height:1.15;
+  font-weight:900;
+  letter-spacing:-.01em;
+  color:#fff;
+  text-align:center;
+  word-break:keep-all;
+}
+#af-tutorial .af-layer-shortcuts-v21{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+#af-tutorial .af-layer-shortcut-chip-v21{
+  min-width:0;
+  border-radius:12px;
+  background:#2b313b;
+  box-shadow:inset 0 0 0 1px rgba(125,211,252,.16);
+  padding:8px 10px;
+}
+#af-tutorial .af-layer-shortcut-chip-v21 strong{
+  display:block;
+  color:#ffffff;
+  font-size:11px;
+  font-weight:900;
+  line-height:1.15;
+  margin-bottom:4px;
+}
+#af-tutorial .af-layer-shortcut-chip-v21 code{
+  display:block;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  font-size:11px;
+  font-weight:800;
+  line-height:1.25;
+  color:#bfdbfe;
+  white-space:normal;
+  word-break:keep-all;
+}
+@media(max-width:980px){
+  #af-tutorial .af-layer-order-grid-v21{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #af-tutorial .af-layer-shortcuts-v21{grid-template-columns:1fr;}
+}
+</style>
+<script>
+(function(){
+  const root=document.getElementById('af-tutorial');
+  if(!root) return;
+  const panel=root.querySelector('.af-layer-panel');
+  const list=root.querySelector('#afLayerList');
+  if(!panel || !list || root.querySelector('#afLayerOrderToolbarV21')) return;
+
+  const icon = {
+    front: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zM18.4 6.4a1 1 0 0 1 0 1.4L14.2 12l4.2 4.2a1 1 0 1 1-1.4 1.4l-4.9-4.9a1 1 0 0 1 0-1.4l4.9-4.9a1 1 0 0 1 1.4 0Z" fill="currentColor"/></svg>',
+    up: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.4 6.4a1 1 0 0 1 0 1.4L13.2 12l4.2 4.2a1 1 0 1 1-1.4 1.4l-4.9-4.9a1 1 0 0 1 0-1.4l4.9-4.9a1 1 0 0 1 1.4 0Z" fill="currentColor"/></svg>',
+    down: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.1 6.4a1 1 0 0 1 1.4 0l4.9 4.9a1 1 0 0 1 0 1.4l-4.9 4.9a1 1 0 0 1-1.4-1.4l4.2-4.2-4.2-4.2a1 1 0 0 1 0-1.4Z" fill="currentColor"/></svg>',
+    back: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6h2v12h-2zM6.6 6.4a1 1 0 0 1 1.4 0l4.9 4.9a1 1 0 0 1 0 1.4L8 17.6a1 1 0 0 1-1.4-1.4l4.2-4.2-4.2-4.2a1 1 0 0 1 0-1.4Z" fill="currentColor"/></svg>'
+  };
+
+  const toolbar=document.createElement('div');
+  toolbar.id='afLayerOrderToolbarV21';
+  toolbar.className='af-layer-order-toolbar-v21';
+  toolbar.innerHTML = ''+
+    '<div class="af-layer-order-head-v21">'+
+      '<div class="af-layer-order-title-v21">'+
+        '<strong>레이어 정리</strong>'+
+        '<span>선택한 도형을 앞뒤 순서로 빠르게 이동할 수 있어요.</span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="af-layer-order-grid-v21">'+
+      '<button type="button" class="af-layer-order-btn-v21" data-order="front" title="맨 앞으로 · Cmd(Ctrl)+Shift+]">'+icon.front+'<b>맨 앞으로</b></button>'+
+      '<button type="button" class="af-layer-order-btn-v21" data-order="up" title="한 칸 앞으로 · Cmd(Ctrl)+]">'+icon.up+'<b>한 칸 앞으로</b></button>'+
+      '<button type="button" class="af-layer-order-btn-v21" data-order="down" title="한 칸 뒤로 · Cmd(Ctrl)+[">'+icon.down+'<b>한 칸 뒤로</b></button>'+
+      '<button type="button" class="af-layer-order-btn-v21" data-order="back" title="맨 뒤로 · Cmd(Ctrl)+Shift+[">'+icon.back+'<b>맨 뒤로</b></button>'+
+    '</div>'+
+    '<div class="af-layer-shortcuts-v21">'+
+      '<div class="af-layer-shortcut-chip-v21"><strong>한 칸 앞 / 뒤</strong><code>Cmd(Ctrl) + ] / [</code></div>'+
+      '<div class="af-layer-shortcut-chip-v21"><strong>맨 앞 / 뒤</strong><code>Cmd(Ctrl) + Shift + ] / [</code></div>'+
+    '</div>';
+
+  panel.insertBefore(toolbar, list);
+
+  const actionMap = {
+    front: ()=> (typeof moveToFront==='function' ? moveToFront() : null),
+    up: ()=> (typeof forwardOne==='function' ? forwardOne() : null),
+    down: ()=> (typeof backOne==='function' ? backOne() : null),
+    back: ()=> (typeof sendToBack==='function' ? sendToBack() : null)
+  };
+
+  toolbar.querySelectorAll('.af-layer-order-btn-v21').forEach(btn=>{
+    btn.addEventListener('pointerdown', ev=>ev.stopPropagation(), true);
+    btn.addEventListener('click', function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      const fn = actionMap[this.dataset.order];
+      if(fn) fn();
+    }, true);
+  });
+})();
+</script>
+
+
+<style id="afLayerHoverTooltipStyleV22">
+#af-tutorial .af-layer-shortcuts-v21{display:none!important;}
+#afLayerHoverTooltipV22{
+  position:fixed;
+  z-index:2147483600;
+  pointer-events:none;
+  opacity:0;
+  transform:translate(-50%,-6px) scale(.96);
+  transition:opacity .12s ease,transform .12s ease;
+  padding:7px 10px;
+  border-radius:9px;
+  background:#111827;
+  color:#fff;
+  border:1px solid rgba(125,211,252,.45);
+  box-shadow:0 10px 28px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.04) inset;
+  font-family:'LaundryGothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+  font-size:11px;
+  font-weight:800;
+  line-height:1.25;
+  white-space:nowrap;
+}
+#afLayerHoverTooltipV22.show{
+  opacity:1;
+  transform:translate(-50%,0) scale(1);
+}
+#afLayerHoverTooltipV22 strong{
+  color:#fff;
+  font-weight:900;
+}
+#afLayerHoverTooltipV22 span{
+  color:#bfdbfe;
+  margin-left:5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  font-weight:800;
+}
+</style>
+<script id="afLayerHoverTooltipScriptV22">
+(function(){
+  const root=document.getElementById('af-tutorial');
+  if(!root)return;
+  const toolbar=root.querySelector('#afLayerOrderToolbarV21');
+  if(!toolbar)return;
+
+  const info={
+    front:{label:'맨 앞으로',shortcut:'Cmd(Ctrl) + Shift + ]'},
+    up:{label:'한 칸 앞으로',shortcut:'Cmd(Ctrl) + ]'},
+    down:{label:'한 칸 뒤로',shortcut:'Cmd(Ctrl) + ['},
+    back:{label:'맨 뒤로',shortcut:'Cmd(Ctrl) + Shift + ['}
+  };
+
+  let tip=document.getElementById('afLayerHoverTooltipV22');
+  if(!tip){
+    tip=document.createElement('div');
+    tip.id='afLayerHoverTooltipV22';
+    tip.setAttribute('role','tooltip');
+    document.body.appendChild(tip);
+  }
+
+  function place(btn){
+    const r=btn.getBoundingClientRect();
+    let left=r.left+r.width/2;
+    let top=r.top-42;
+    tip.style.left=left+'px';
+    tip.style.top=top+'px';
+    requestAnimationFrame(function(){
+      const tr=tip.getBoundingClientRect();
+      const pad=10;
+      if(tr.left<pad) left+=pad-tr.left;
+      if(tr.right>window.innerWidth-pad) left-=tr.right-(window.innerWidth-pad);
+      if(tr.top<pad) top=r.bottom+8;
+      tip.style.left=left+'px';
+      tip.style.top=top+'px';
+    });
+  }
+
+  function show(btn){
+    const d=info[btn.dataset.order];
+    if(!d)return;
+    tip.innerHTML='<strong>'+d.label+'</strong><span>'+d.shortcut+'</span>';
+    place(btn);
+    tip.classList.add('show');
+  }
+  function hide(){tip.classList.remove('show');}
+
+  toolbar.querySelectorAll('.af-layer-order-btn-v21').forEach(function(btn){
+    const d=info[btn.dataset.order];
+    if(d){
+      btn.dataset.shortcut=d.shortcut;
+      btn.title='';
+      btn.setAttribute('aria-describedby','afLayerHoverTooltipV22');
+    }
+    btn.addEventListener('mouseenter',function(){show(btn);});
+    btn.addEventListener('mouseleave',hide);
+    btn.addEventListener('focus',function(){show(btn);});
+    btn.addEventListener('blur',hide);
+  });
+  window.addEventListener('scroll',hide,true);
+  window.addEventListener('resize',hide);
+})();
+</script>
+
+
+<!-- AF_V27_MINIMAL_FIRST_PAGE_AND_LAYER_CLEANUP -->
+<style id="afV27MinimalCleanupStyle">
+/* 1) Intro title: slightly smaller and forced to one line. */
+html body #af-tutorial #afStart .af-start-card{
+  width:min(760px,90%)!important;
+  max-width:90%!important;
+}
+html body #af-tutorial #afStart .af-start-card h2{
+  font-size:clamp(34px,4vw,48px)!important;
+  line-height:1.08!important;
+  letter-spacing:-.035em!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  max-width:none!important;
+  width:auto!important;
+  text-align:center!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+@media(max-width:720px){
+  html body #af-tutorial #afStart .af-start-card h2{
+    font-size:clamp(28px,6vw,38px)!important;
+  }
+}
+
+/* 2) Remove only the large Layer Order block that was added in v21/v22. */
+#af-tutorial #afLayerOrderToolbarV21,
+#af-tutorial .af-layer-order-toolbar-v21,
+#afLayerHoverTooltipV22{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+</style>
+<script id="afV27MinimalCleanupScript">
+(function(){
+  function cleanup(){
+    const toolbar=document.getElementById('afLayerOrderToolbarV21');
+    if(toolbar) toolbar.remove();
+    const tip=document.getElementById('afLayerHoverTooltipV22');
+    if(tip) tip.remove();
+  }
+  cleanup();
+  document.addEventListener('DOMContentLoaded',cleanup,{once:true});
+  setTimeout(cleanup,50);
+  setTimeout(cleanup,500);
+})();
+</script>
+
+
+<style id="afFinalCtaStyleV28">
+#af-tutorial .af-final-cta-v28{
+  position:absolute;
+  inset:0;
+  z-index:6400;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(7,10,19,.88);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .32s ease;
+}
+#af-tutorial .af-final-cta-v28.show{opacity:1;pointer-events:auto;}
+#af-tutorial .af-final-cta-card-v28{
+  width:min(640px,92%);
+  padding:42px 34px 36px;
+  border-radius:30px;
+  background:#181d30;
+  border:1px solid rgba(120,170,255,.28);
+  color:#fff;
+  text-align:center;
+  box-shadow:0 32px 90px rgba(0,0,0,.46),0 0 60px rgba(0,104,255,.10);
+}
+#af-tutorial .af-final-score-v28{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:30px;
+  padding:0 13px;
+  border-radius:999px;
+  margin-bottom:18px;
+  background:rgba(0,104,255,.14);
+  border:1px solid rgba(120,170,255,.28);
+  color:#9bc0ff;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+#af-tutorial .af-final-cta-card-v28 h2{
+  margin:0;
+  color:#fff;
+  font-size:clamp(30px,4vw,48px);
+  line-height:1.2;
+  letter-spacing:-.04em;
+  font-weight:800;
+  word-break:keep-all;
+}
+#af-tutorial .af-final-cta-card-v28 p{
+  margin:16px 0 12px;
+  color:#cbd5e1;
+  font-size:15px;
+  line-height:1.6;
+  font-weight:500;
+}
+#af-tutorial .af-final-arrow-v28{
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#78aaff;
+  font-size:32px;
+  font-weight:900;
+  line-height:1;
+}
+#af-tutorial .af-final-arrow-v28 span{
+  display:block;
+  animation:afFinalArrowBounceV28 .8s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px rgba(120,170,255,.55));
+}
+#af-tutorial .af-final-link-v28{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:290px;
+  min-height:58px;
+  padding:0 24px;
+  border-radius:16px;
+  background:#0068ff;
+  color:#fff!important;
+  text-decoration:none!important;
+  font-size:17px;
+  font-weight:800;
+  box-shadow:0 14px 34px rgba(0,104,255,.32);
+  transition:transform .16s ease,background .16s ease,box-shadow .16s ease;
+}
+#af-tutorial .af-final-link-v28:hover{
+  background:#1477ff;
+  transform:translateY(-2px);
+  box-shadow:0 18px 40px rgba(0,104,255,.38);
+}
+#af-tutorial .af-final-link-v28:active{transform:translateY(0);}
+@keyframes afFinalArrowBounceV28{
+  0%,100%{transform:translateY(-4px);opacity:.68}
+  50%{transform:translateY(7px);opacity:1}
+}
+@media(max-width:640px){
+  #af-tutorial .af-final-cta-card-v28{padding:34px 22px 28px;}
+  #af-tutorial .af-final-cta-card-v28 h2{font-size:30px;}
+  #af-tutorial .af-final-link-v28{min-width:0;width:100%;font-size:15px;}
+}
+</style>
+
+
+<style id="af-final-cta-spacing-v29">
+#af-tutorial .af-final-cta-card-v28 h2{
+  letter-spacing:-0.04em !important;
+  word-spacing:0.02em !important;
+}
+#af-tutorial .af-final-cta-card-v28 p{
+  letter-spacing:-0.01em !important;
+}
+#af-tutorial .af-final-link-v28{
+  letter-spacing:-0.02em !important;
+}
+</style>
+
+<style id="afLayerShortcutLabelsV31">
+/* Stable shortcut labels only: no JavaScript, no event listeners. */
+#af-tutorial #afTopMenuZoneV46 .af-menu-wrap-v45:first-child .af-menu-list-v45{
+  min-width:320px !important;
+}
+#af-tutorial #afTopMenuZoneV46 .af-menu-wrap-v45:first-child .af-menu-item-v45{
+  display:flex !important;
+  align-items:center !important;
+  width:100% !important;
+  gap:10px !important;
+}
+#af-tutorial #afTopMenuZoneV46 .af-menu-wrap-v45:first-child .af-menu-item-v45::after{
+  margin-left:auto !important;
+  padding-left:14px !important;
+  color:#9fb8e8 !important;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace !important;
+  font-size:11px !important;
+  font-weight:800 !important;
+  letter-spacing:-.02em !important;
+  white-space:nowrap !important;
+  opacity:.95 !important;
+}
+#af-tutorial #afTopMenuZoneV46 .af-menu-wrap-v45:first-child .af-menu-item-v45:nth-child(1)::after{content:"Cmd(Ctrl)+Shift+[" !important;}
+#af-tutorial #afTopMenuZoneV46 .af-menu-wrap-v45:first-child .af-menu-item-v45:nth-child(2)::after{content:"Cmd(Ctrl)+[" !important;}
+#af-tutorial #afTopMenuZoneV46 .af-menu-wrap-v45:first-child .af-menu-item-v45:nth-child(3)::after{content:"Cmd(Ctrl)+]" !important;}
+#af-tutorial #afTopMenuZoneV46 .af-menu-wrap-v45:first-child .af-menu-item-v45:nth-child(4)::after{content:"Cmd(Ctrl)+Shift+]" !important;}
+#af-tutorial #afTopMenuZoneV46 .af-menu-wrap-v45:first-child .af-menu-item-v45:hover::after{
+  color:#335ea8 !important;
+}
+</style>
+
+
+<style id="af-final-cta-spacing-v32">
+#af-tutorial .af-final-cta-card-v28 h2{
+  letter-spacing: -0.015em !important;
+  word-spacing: 0.04em !important;
+}
+#af-tutorial .af-final-link-v28{
+  letter-spacing: -0.005em !important;
+  word-spacing: 0.02em !important;
+}
+</style>
 </body>
 </html>
