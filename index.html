@@ -21,6 +21,33 @@ html,body,#af-tutorial{-webkit-touch-callout:none}
 </style>
 </head>
 <body data-au-build="AU-TUT-20260824-02">
+<script id="afEyedropperEarlyKeyV43">
+(function(){
+  if(window.__afEyedropperEarlyKeyInstalled)return;
+  window.__afEyedropperEarlyKeyInstalled=true;
+  window.addEventListener('keydown',function(e){
+    const tag=((e.target&&e.target.tagName)||'').toLowerCase();
+    const isI=e.code==='KeyI'||e.key==='i'||e.key==='I';
+    if(!isI)return;
+    if(tag==='textarea'||tag==='select'||(e.target&&e.target.isContentEditable))return;
+    if(tag==='input'){
+      if(e.target&&e.target.id==='afFileName'){
+        const mt=document.getElementById('afMissionTitle');
+        const title=(mt&&mt.textContent)||'';
+        if(/파일\s*이름|이름\s*바꾸기/.test(title))return;
+        try{e.target.blur();}catch(_e){}
+      }else return;
+    }
+    if(!isI||e.metaKey||e.ctrlKey||e.altKey)return;
+    if(typeof window.__afToggleEyedropperV43!=='function')return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+    window.__afToggleEyedropperV43();
+  },true);
+})();
+</script>
+
 <style data-af-laundry-font="true">
 @font-face {
   font-family: 'LaundryGothic';
@@ -46,7 +73,7 @@ html,body,#af-tutorial{-webkit-touch-callout:none}
   font-family: 'LaundryGothic', sans-serif !important;
 }
 </style>
-<div id="af-tutorial" data-au-owner="AFFINITY-UNIVERSE" data-au-build="AU-TUT-20260824-02" data-au-fingerprint="B640BFCA817E5101" data-au-distribution="protected" class="laundry-gothic" style="font-family:'LaundryGothic',sans-serif;"><div class="af-start" id="afStart"><div class="af-start-card"><div class="af-start-badge">AFFINITY UNIVERSE</div><h2>Mini Designer Tutorial</h2><p>도형 만들기, 컬러, 스트로크, 레이어, Export PNG까지<br>차근차근 먼저 익혀봐요.</p><button type="button" id="afStartBtn">튜토리얼 시작하기</button></div></div><div class="af-toast" id="afToast">Good Job!</div><div class="af-app"><header class="af-topbar"><section class="af-mission-top" id="afMissionCard"><div class="af-mission-kicker"><span>TODAY MISSION</span><b id="afMissionStep">1 / 24</b></div><div class="af-mission-body"><strong id="afMissionTitle">파일 이름 바꾸기</strong><span id="afMissionDesc">상단의 Untitled를 눌러 원하는 이름으로 바꿔보세요.</span></div></section><div class="af-top-actions"><button type="button" class="af-export" id="afExport">Export PNG</button></div></header><div class="af-workspace"><aside class="af-toolbar"><button type="button" class="af-tool active" data-tool="move" id="afMoveTool" title="Move Tool (V)"><svg viewBox="0 0 32 32"><path d="M7 3 L23 18 L15.5 18.8 L19.5 27.5 L15.6 29.2 L11.6 20.5 L7 26 Z" fill="#050505" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></button><div class="af-shape-wrap"><button type="button" class="af-tool" data-tool="shape" id="afShapeTool" title="Shape Tool (U)"><span id="afShapeIcon" class="af-icon af-icon-rect"></span></button><div class="af-shape-menu" id="afShapeMenu"><button type="button" data-shape="rect"><span class="af-icon af-icon-rect"></span></button><button type="button" data-shape="circle"><span class="af-icon af-icon-circle"></span></button><button type="button" data-shape="round"><span class="af-icon af-icon-round"></span></button><button type="button" data-shape="triangle"><span class="af-icon af-icon-triangle"></span></button><button type="button" data-shape="star">★</button></div></div><div class="af-mini-targets"><button type="button" id="afMiniFill" class="active"></button><button type="button" id="afMiniStroke"></button></div></aside><main class="af-main"><div class="af-docbar"><input id="afFileName" type="text" value="Untitled" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" draggable="false"><span>@ 71%</span><em>V 무브툴 / U 도형툴 / ctrl(command)+Z / ctrl(command)+shift+Z / ctrl(command)+C,V / ctrl(command)+J / ctrl(command)+shift 드래그 / ctrl(command)+G / ctrl(command)+shift+G / 레이어 순서 단축키는 cmd(ctrl)+[ ], cmd(ctrl)+shift+[ ] 사용</em></div><div class="af-stage"><div class="af-artboard-wrap"><div class="af-artboard-label">Artboard1</div><div class="af-artboard" id="afArtboard"><div class="af-empty" id="afEmpty">도형 도구를 선택한 뒤<br>흰색 Artboard에서 드래그해보세요.</div><div class="af-drag-guide" id="afDragGuide"><strong>드래그란?</strong><span>마우스를 누른 채 움직이고 원하는 위치에서 손을 떼는 동작이에요.</span><i></i></div><div class="af-guide-overlay" id="afGuideOverlay"></div></div></div></div><div class="af-bottombar"><div><strong id="afStatusStrong">Ready</strong><span id="afStatusText">튜토리얼을 시작해보세요.</span></div><div><span id="afSelectionInfo">No Selection</span><span id="afCoord">X:0 / Y:0</span></div></div></main><aside class="af-sidebar"><section class="af-panel af-top-panel"><div class="af-tabs"><button type="button" class="active" data-panel="colour">Colour</button><button type="button" data-panel="stroke">Stroke</button></div><div class="af-tab-body active" id="afColourPanel"><div class="af-colour-topline"><div class="af-colour-targets"><button type="button" id="afBigFill" class="active" title="면 색상"></button><button type="button" id="afBigStroke" title="선 색상"></button><button type="button" id="afNoColor" title="색상 없음"></button></div><div class="af-colour-hexbox"><span>#:</span><b id="afHexText">EBEBEB</b></div></div><div class="af-wheel-wrap"><div class="af-wheel-stage" id="afWheelStage"><canvas id="afWheelCanvas" width="290" height="290"></canvas><button type="button" id="afHuePointer" class="af-wheel-pointer af-hue-pointer" aria-label="Hue pointer"></button><button type="button" id="afTriPointer" class="af-wheel-pointer af-tri-pointer" aria-label="Triangle pointer"></button></div></div><label class="af-range"><span>Opacity</span><input type="range" id="afOpacity" min="0" max="100" value="100"><b id="afOpacityText">100%</b></label></div><div class="af-tab-body" id="afStrokePanel"><div class="af-stroke-row"><span>Style</span><button type="button" class="active" data-stroke-style="none">None</button><button type="button" data-stroke-style="solid">Solid</button><button type="button" data-stroke-style="dashed">Dash</button><button type="button" data-stroke-style="dotted">Dot</button></div><label class="af-range"><span>Width</span><input type="range" id="afStrokeWidth" min="0" max="30" value="0"><b id="afStrokeText">0pt</b></label></div></section><section class="af-panel af-layer-panel"><div class="af-layer-head"><div><strong>Layers</strong></div></div><div class="af-artboard-persistent-wrap-v10"><button type="button" id="afPersistentArtboardRowV10" class="af-persistent-artboard-row-v10" aria-expanded="true"><span class="af-persistent-arrow-v10">▾</span><span class="af-persistent-thumb-v10" aria-hidden="true"></span><span class="af-persistent-name-v10">Artboard1</span><span class="af-persistent-count-v10">0 layers</span></button></div><div class="af-layer-list" id="afLayerList"></div><div class="af-layer-foot"><button type="button" id="afTrashBtn" class="af-trash-btn" title="삭제"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2Zm1 7h2v8h-2v-8Zm4 0h2v8h-2v-8ZM7 10h2v8H7v-8Zm-1 10h12l1-12H5l1 12Z" fill="currentColor"/></svg></button></div></section></aside></div></div></div><style>
+<div id="af-tutorial" data-au-owner="AFFINITY-UNIVERSE" data-au-build="AU-TUT-20260824-02" data-au-fingerprint="B640BFCA817E5101" data-au-distribution="protected" class="laundry-gothic" style="font-family:'LaundryGothic',sans-serif;"><div class="af-start" id="afStart"><div class="af-start-card"><div class="af-start-badge">AFFINITY UNIVERSE</div><h2>Mini Designer Tutorial</h2><p>도형 만들기, 컬러, 스트로크, 레이어, Export PNG까지<br>차근차근 먼저 익혀봐요.</p><button type="button" id="afStartBtn">튜토리얼 시작하기</button></div></div><div class="af-toast" id="afToast">Good Job!</div><div class="af-app"><header class="af-topbar"><section class="af-mission-top" id="afMissionCard"><div class="af-mission-kicker"><span>TODAY MISSION</span><b id="afMissionStep">1 / 24</b></div><div class="af-mission-body"><strong id="afMissionTitle">파일 이름 바꾸기</strong><span id="afMissionDesc">상단의 Untitled를 눌러 원하는 이름으로 바꿔보세요.</span></div></section><div class="af-top-actions"><button type="button" class="af-export" id="afExport">Export PNG</button></div></header><div class="af-workspace"><aside class="af-toolbar"><button type="button" class="af-tool active" data-tool="move" id="afMoveTool" title="Move Tool (V)"><svg viewBox="0 0 32 32"><path d="M7 3 L23 18 L15.5 18.8 L19.5 27.5 L15.6 29.2 L11.6 20.5 L7 26 Z" fill="#050505" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></button><div class="af-shape-wrap"><button type="button" class="af-tool" data-tool="shape" id="afShapeTool" title="Shape Tool (U)"><span id="afShapeIcon" class="af-icon af-icon-rect"></span></button><div class="af-shape-menu" id="afShapeMenu"><button type="button" data-shape="rect"><span class="af-icon af-icon-rect"></span></button><button type="button" data-shape="circle"><span class="af-icon af-icon-circle"></span></button><button type="button" data-shape="round"><span class="af-icon af-icon-round"></span></button><button type="button" data-shape="triangle"><span class="af-icon af-icon-triangle"></span></button><button type="button" data-shape="star">★</button></div></div><div class="af-mini-targets"><button type="button" id="afMiniFill" class="active"></button><button type="button" id="afMiniStroke"></button></div></aside><main class="af-main"><div class="af-docbar"><input id="afFileName" type="text" value="Untitled" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" draggable="false"><span>@ 71%</span><em>V 무브툴 / U 도형툴 / ctrl(command)+Z / ctrl(command)+shift+Z / ctrl(command)+C,V / ctrl(command)+J / ctrl(command)+shift 드래그 / ctrl(command)+G / ctrl(command)+shift+G / 레이어 순서 단축키는 cmd(ctrl)+[ ], cmd(ctrl)+shift+[ ] 사용</em></div><div class="af-stage"><div class="af-artboard-wrap"><div class="af-artboard-label">Artboard1</div><div class="af-artboard" id="afArtboard"><div class="af-empty" id="afEmpty">도형 도구를 선택한 뒤<br>흰색 Artboard에서 드래그해보세요.</div><div class="af-drag-guide" id="afDragGuide"><strong>드래그란?</strong><span>마우스를 누른 채 움직이고 원하는 위치에서 손을 떼는 동작이에요.</span><i></i></div><div class="af-guide-overlay" id="afGuideOverlay"></div></div></div></div><div class="af-bottombar"><div><strong id="afStatusStrong">Ready</strong><span id="afStatusText">튜토리얼을 시작해보세요.</span></div><div><span id="afSelectionInfo">No Selection</span><span id="afCoord">X:0 / Y:0</span></div></div></main><aside class="af-sidebar"><section class="af-panel af-top-panel"><div class="af-tabs"><button type="button" class="active" data-panel="colour">Colour</button><button type="button" data-panel="stroke">Stroke</button></div><div class="af-tab-body active" id="afColourPanel"><div class="af-colour-topline"><div class="af-colour-targets"><button type="button" id="afBigFill" class="active" title="면 색상"></button><button type="button" id="afBigStroke" title="선 색상"></button><button type="button" id="afNoColor" title="색상 없음"></button><button type="button" id="afEyedropperV41" class="af-eyedropper-v41" title="스포이드 (I) · 색상 가져오기" aria-label="스포이드" aria-pressed="false"><svg viewBox="0 0 36 36" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22.4 4.5a4.8 4.8 0 0 1 6.8 0l2.3 2.3a4.8 4.8 0 0 1 0 6.8l-4.2 4.2-9.1-9.1 4.2-4.2Z"/><path d="M21.5 11.7 9.7 23.5a5.3 5.3 0 0 0-1.4 2.5l-.9 3.4 3.4-.9a5.3 5.3 0 0 0 2.5-1.4l11.8-11.8"/><path d="m8.7 24.6 2.7 2.7"/></svg></button><span id="afEyedropperSampleV41" class="af-eyedropper-sample-v41" title="스포이드로 가져온 색상" aria-hidden="true"></span></div><div class="af-colour-hexbox"><span>#:</span><b id="afHexText">EBEBEB</b></div></div><div class="af-wheel-wrap"><div class="af-wheel-stage" id="afWheelStage"><canvas id="afWheelCanvas" width="290" height="290"></canvas><button type="button" id="afHuePointer" class="af-wheel-pointer af-hue-pointer" aria-label="Hue pointer"></button><button type="button" id="afTriPointer" class="af-wheel-pointer af-tri-pointer" aria-label="Triangle pointer"></button></div></div><label class="af-range"><span>Opacity</span><input type="range" id="afOpacity" min="0" max="100" value="100"><b id="afOpacityText">100%</b></label></div><div class="af-tab-body" id="afStrokePanel"><div class="af-stroke-row"><span>Style</span><button type="button" class="active" data-stroke-style="none">None</button><button type="button" data-stroke-style="solid">Solid</button><button type="button" data-stroke-style="dashed">Dash</button><button type="button" data-stroke-style="dotted">Dot</button></div><label class="af-range"><span>Width</span><input type="range" id="afStrokeWidth" min="0" max="30" value="0"><b id="afStrokeText">0pt</b></label></div></section><section class="af-panel af-layer-panel"><div class="af-layer-head"><div><strong>Layers</strong></div></div><div class="af-artboard-persistent-wrap-v10"><button type="button" id="afPersistentArtboardRowV10" class="af-persistent-artboard-row-v10" aria-expanded="true"><span class="af-persistent-arrow-v10">▾</span><span class="af-persistent-thumb-v10" aria-hidden="true"></span><span class="af-persistent-name-v10">Artboard1</span><span class="af-persistent-count-v10">0 layers</span></button></div><div class="af-layer-list" id="afLayerList"></div><div class="af-layer-foot"><button type="button" id="afTrashBtn" class="af-trash-btn" title="삭제"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2Zm1 7h2v8h-2v-8Zm4 0h2v8h-2v-8ZM7 10h2v8H7v-8Zm-1 10h12l1-12H5l1 12Z" fill="currentColor"/></svg></button></div></section></aside></div></div></div><style>
 .laundry-gothic {
   font-family: "LaundryGothic", sans-serif !important;
   font-weight: 400;
@@ -15823,7 +15850,14 @@ afV106EnsureOrder(el);
 delete el.dataset.snap;
 delete el.dataset.afV94KeepLayer;
 });
-list.sort((a,b)=>afV106EnsureOrder(a)-afV106EnsureOrder(b)).forEach((el,index)=>{
+/* Keep the CURRENT visual z-order instead of restoring creation order.
+   This lets bunny/puppy layers stay where the user moved them with the
+   layer-order menu or shortcuts. New shapes still arrive on top naturally. */
+list.sort((a,b)=>{
+const za=parseInt(a.style.zIndex,10),zb=parseInt(b.style.zIndex,10);
+if(Number.isFinite(za)&&Number.isFinite(zb)&&za!==zb)return za-zb;
+return afV106EnsureOrder(a)-afV106EnsureOrder(b);
+}).forEach((el,index)=>{
 const nextZ=String(260+index);
 if(el.style.zIndex!==nextZ)el.style.zIndex=nextZ;
 });
@@ -16212,12 +16246,16 @@ let wrap=document.createElement('div');
 wrap.id='afFinalCtaV28';
 wrap.className='af-final-cta-v28';
 wrap.innerHTML=''
-+'<div class="af-final-cta-card-v28">'
-+'<div class="af-final-score-v28">MISSION COMPLETE</div>'
-+'<h2>이제 어피니티 유니버스로<br>모험을 떠나볼까요? 🚀</h2>'
-+'<p>아래 버튼을 눌러 다음 모험을 시작해보세요.</p>'
-+'<div class="af-final-arrow-v28" aria-hidden="true"><span>↓</span></div>'
-+'<a class="af-final-link-v28" href="https://pf.kakao.com/_xhbxdib" target="_blank" rel="noopener noreferrer">어피니티 유니버스 만나러 가기</a>'
++'<div class="af-final-cta-card-v28 af-final-game-card-v34">'
++'<div class="af-final-score-v28">100점!</div>'
++'<h2>그림을 모두 완성했어요!<br>다른 게임도 하러 가볼까요? 🎮</h2>'
++'<p>원하는 게임을 골라 바로 이어서 플레이해보세요.</p>'
++'<div class="af-final-game-grid-v34">'
++'<a class="af-final-game-link-v34" href="https://affinityuniverse.github.io/shortcutgame/" target="_blank" rel="noopener noreferrer"><span class="af-final-game-icon-v34">⌨</span><strong>단축키 게임</strong><small>빠르게 단축키 익히기</small></a>'
++'<a class="af-final-game-link-v34" href="https://affinityuniverse.github.io/typinggame/" target="_blank" rel="noopener noreferrer"><span class="af-final-game-icon-v34">ABC</span><strong>영어 단어 게임</strong><small>영어 단어 타이핑</small></a>'
++'<a class="af-final-game-link-v34" href="https://affinityuniverse.github.io/typinggame/" target="_blank" rel="noopener noreferrer"><span class="af-final-game-icon-v34">가</span><strong>한국어 단어 게임</strong><small>한국어 단어 타이핑</small></a>'
++'</div>'
++'<a class="af-final-consult-link-v35" href="https://pf.kakao.com/_xhbxdib" target="_blank" rel="noopener noreferrer">어피니티 유니버스 상담하기 →</a>'
 +'</div>';
 root.appendChild(wrap);
 requestAnimationFrame(()=>wrap.classList.add('show'));
@@ -16687,11 +16725,52 @@ let v=sm.querySelector('svg');if(v)v.style.cssText+=';animation:none!important;f
 return r;
 };
 playSuccessVoice=()=>ok();cheer=()=>ok();celebrate=()=>ok();['afV98Ppororong','afV39PlayAudio','afV39PlaySuccessVoice','afV50PlayMissionCompleteSound','afV52PlayMissionCompleteSound'].forEach(k=>{try{window[k]=()=>ok()}catch(e){}});primeSuccessVoices=()=>{S.forEach(a=>{try{new Audio(a.src).load()}catch(e){}});try{FA.muted=true;let p=FA.play();if(p&&p.then)p.then(()=>{FA.pause();FA.currentTime=0;FA.muted=false}).catch(()=>{FA.muted=false;FA.load()});else{FA.pause();FA.currentTime=0;FA.muted=false}}catch(e){try{FA.muted=false;FA.load()}catch(x){}}};
-complete=function(){hideCoach();missionStep.textContent='완료';missionTitle.textContent='100점!';missionDesc.textContent='이제 어피니티 유니버스로 모험을 떠나볼까요? 🚀';done();setTimeout(afShowFinalCtaV28,2850)};
+complete=function(){hideCoach();missionStep.textContent='완료';missionTitle.textContent='100점!';missionDesc.textContent='그림을 모두 완성했어요. 다른 게임도 하러 가볼까요?';done();setTimeout(afShowFinalCtaV28,2850)};
 build();hideTips();btn();renderMission();guide(cur());
 })();
 
-(function(){function box(){return root.querySelector('.af-transform')}function inside(e,b){let r=b.getBoundingClientRect();return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom}root.addEventListener('pointerdown',e=>{let b=box();if(!b||!selected||selected.length<2||!inside(e,b))return;if(e.target.closest&&e.target.closest('.af-handle,.af-rotate'))return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation&&e.stopImmediatePropagation();let sx=e.clientX,sy=e.clientY,st=selected.map(o=>[o,parseFloat(o.style.left)||0,parseFloat(o.style.top)||0]);function mv(ev){let dx=ev.clientX-sx,dy=ev.clientY-sy;st.forEach(a=>{a[0].style.left=a[1]+dx+'px';a[0].style.top=a[2]+dy+'px'});try{renderBox()}catch(x){}}function up(){document.removeEventListener('pointermove',mv,true);document.removeEventListener('pointerup',up,true);try{renderLayers();renderBox();saveHistory()}catch(x){}}document.addEventListener('pointermove',mv,true);document.addEventListener('pointerup',up,true)},true);})();
+(function(){
+function box(){return root.querySelector('.af-transform')}
+function inside(e,b){let r=b.getBoundingClientRect();return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom}
+root.addEventListener('pointerdown',e=>{
+let b=box();
+if(!b||!selected||selected.length<2||!inside(e,b))return;
+if(e.target.closest&&e.target.closest('.af-handle,.af-rotate'))return;
+e.preventDefault();
+e.stopPropagation();
+if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+const commandStart=!!(e.ctrlKey||e.metaKey||(keyState&&(keyState.ctrl||keyState.meta)));
+const shiftStart=!!(e.shiftKey||(keyState&&keyState.shift));
+let active=[...selected];
+let duplicated=false;
+if(commandStart&&typeof duplicateObjects==='function'){
+const clones=duplicateObjects(active,0,0,false)||[];
+if(clones.length){active=clones;duplicated=true;try{setSelected(active)}catch(x){}}
+}
+let sx=e.clientX,sy=e.clientY;
+let st=active.map(o=>[o,parseFloat(o.style.left)||0,parseFloat(o.style.top)||0,parseFloat(o.style.width)||o.offsetWidth||0,parseFloat(o.style.height)||o.offsetHeight||0]);
+let moved=false;
+function mv(ev){
+let dx=ev.clientX-sx,dy=ev.clientY-sy;
+if(Math.abs(dx)>3||Math.abs(dy)>3)moved=true;
+if(ev.shiftKey||shiftStart){try{const c=constrain(dx,dy);dx=c.dx;dy=c.dy}catch(x){}}
+st.forEach(a=>{a[0].style.left=a[1]+dx+'px';a[0].style.top=a[2]+dy+'px'});
+try{renderBox()}catch(x){}
+}
+function up(){
+document.removeEventListener('pointermove',mv,true);
+document.removeEventListener('pointerup',up,true);
+if(duplicated&&moved&&active.length&&st.length){
+try{lastPowerDuplicate={dx:Math.round((parseFloat(active[0].style.left)||0)-st[0][1]),dy:Math.round((parseFloat(active[0].style.top)||0)-st[0][2]),dw:0,dh:0}}catch(x){}
+}
+try{updateGuideState&&updateGuideState()}catch(x){}
+try{checkGuideDone&&checkGuideDone()}catch(x){}
+try{renderLayers();renderBox();saveHistory()}catch(x){}
+}
+document.addEventListener('pointermove',mv,true);
+document.addEventListener('pointerup',up,true);
+},true);
+})();
 
 (function(){let v,h;function mk(){if(v)return;v=document.createElement('i');h=document.createElement('i');v.className='af-smart-v';h.className='af-smart-h';art.appendChild(v);art.appendChild(h);let st=document.createElement('style');st.textContent='#af-tutorial .af-smart-v,#af-tutorial .af-smart-h{position:absolute;z-index:6100;pointer-events:none;display:none}.af-smart-v{top:0;bottom:0;width:2px;background:#ef4444;box-shadow:0 0 10px #ef4444}.af-smart-h{left:0;right:0;height:2px;background:#22c55e;box-shadow:0 0 10px #22c55e}';root.appendChild(st)}function off(){if(v){v.style.display='none';h.style.display='none'}}function rr(o){return{l:o.offsetLeft,t:o.offsetTop,w:o.offsetWidth,h:o.offsetHeight}}function show(x,y){mk();v.style.left=x+'px';h.style.top=y+'px';v.style.display='block';h.style.display='block'}function run(){let a=(selected&&selected[0])||art.querySelector('.af-object.creating');if(!a)return off();let r=rr(a),cx=r.l+r.w/2,cy=r.t+r.h/2,bx=art.clientWidth/2,by=art.clientHeight/2,d=8;if(Math.abs(cx-bx)<d&&Math.abs(cy-by)<d)show(bx,by);else off()}document.addEventListener('pointermove',()=>requestAnimationFrame(run),true);document.addEventListener('pointerup',()=>setTimeout(off,60),true);})();
 
@@ -17209,12 +17288,14 @@ if(animal==='bunny')afV115EnsureBunnyVisual();
 return result;
 };
 
-const afV115StyleGuideBefore=styleSilhouetteGuide;
+const afV115StyleGuideBefore=(typeof styleSilhouetteGuide==='function')?styleSilhouetteGuide:null;
+if(afV115StyleGuideBefore){
 styleSilhouetteGuide=function(){
 const result=afV115StyleGuideBefore.apply(this,arguments);
 afV115EnsureBunnyVisual();
 return result;
 };
+}
 
 const afV115Style=document.createElement('style');
 afV115Style.id='afV115BunnyStyle';
@@ -17253,8 +17334,187 @@ root.appendChild(afV115Style);
 if((guideOverlay&&guideOverlay.dataset.afV98Animal==='bunny')||currentGuideAnimal==='bunny'){
 try{showGuide('bunny');styleSilhouetteGuide();}catch(e){}
 }
+
 })();
 
+/* AF_V41_EYEDROPPER_NATIVE: integrated into the main app scope. */
+(function(){
+const eyeBtn=document.getElementById('afEyedropperV41');
+const eyeSample=document.getElementById('afEyedropperSampleV41');
+if(!eyeBtn)return;
+let eyeActive=false;
+let eyePrevStrong='';
+let eyePrevText='';
+
+function eyeNormalize(value){
+const v=String(value||'').trim();
+if(!v)return null;
+if(v==='transparent'||v==='rgba(0, 0, 0, 0)'||v==='rgba(0,0,0,0)')return 'transparent';
+if(/^#[0-9a-f]{6}$/i.test(v))return v.toUpperCase();
+if(/^#[0-9a-f]{3}$/i.test(v))return ('#'+v.slice(1).split('').map(c=>c+c).join('')).toUpperCase();
+const m=v.match(/^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:\s*[,/]\s*([\d.]+))?\s*\)$/i);
+if(m){
+ if(m[4]!==undefined&&Number(m[4])<=0)return 'transparent';
+ return '#'+[m[1],m[2],m[3]].map(n=>Math.max(0,Math.min(255,Math.round(Number(n)||0))).toString(16).padStart(2,'0')).join('').toUpperCase();
+}
+return null;
+}
+function eyeSampleSet(color){
+if(!eyeSample)return;
+if(!color||color==='transparent')eyeSample.style.background='linear-gradient(135deg,#fff 0 44%,#ef4444 45% 55%,#fff 56% 100%)';
+else eyeSample.style.background=color;
+}
+function eyeStatus(active,message){
+if(active){
+ eyePrevStrong=statusStrong?statusStrong.textContent:'';
+ eyePrevText=statusText?statusText.textContent:'';
+ if(statusStrong)statusStrong.textContent='Eyedropper';
+ if(statusText)statusText.textContent='색상을 가져올 도형을 클릭하세요. I 또는 ESC로 취소할 수 있어요.';
+}else if(message){
+ if(statusStrong)statusStrong.textContent='Color Picked';
+ if(statusText)statusText.textContent=message;
+ setTimeout(()=>{
+   if(statusStrong&&statusStrong.textContent==='Color Picked')statusStrong.textContent=eyePrevStrong;
+   if(statusText)statusText.textContent=eyePrevText;
+ },1200);
+}else{
+ if(statusStrong)statusStrong.textContent=eyePrevStrong;
+ if(statusText)statusText.textContent=eyePrevText;
+}
+}
+function eyeStop(message){
+eyeActive=false;
+root.classList.remove('af-eyedropper-mode-v41');
+eyeBtn.classList.remove('active');
+eyeBtn.setAttribute('aria-pressed','false');
+eyeStatus(false,message||'');
+}
+function eyeStart(){
+if(eyeActive){eyeStop('');return;}
+eyeActive=true;
+root.classList.add('af-eyedropper-mode-v41');
+eyeBtn.classList.add('active');
+eyeBtn.setAttribute('aria-pressed','true');
+eyeStatus(true,'');
+}
+window.__afToggleEyedropperV43=function(){eyeStart();};
+
+function eyeReadObjectColor(obj){
+if(!obj)return null;
+const st=getComputedStyle(obj);
+
+function normalized(v){
+ const n=eyeNormalize(v);
+ return n&&n!=='transparent'?n:null;
+}
+function explicitTransparent(v){
+ return eyeNormalize(v)==='transparent';
+}
+function readStoredFill(){
+ // Stored object colour is authoritative. Do not replace an explicit transparent fill
+ // with the currently selected global fill colour.
+ if(obj.dataset&&obj.dataset.afFillColor!==undefined){
+   const v=obj.dataset.afFillColor;
+   if(explicitTransparent(v))return null;
+   const n=normalized(v); if(n)return n;
+ }
+ const cssFill=obj.style.getPropertyValue('--af-fill-color')||obj.style.getPropertyValue('--heart-fill');
+ if(cssFill){ if(explicitTransparent(cssFill))return null; const n=normalized(cssFill); if(n)return n; }
+ const kind=obj.dataset&&obj.dataset.kind;
+ if(kind==='star'||kind==='heart'){
+   const n=normalized(obj.style.color)||normalized(st.color); if(n)return n;
+ }
+ return normalized(obj.style.backgroundColor)||normalized(obj.style.background)||normalized(st.backgroundColor);
+}
+function readStoredStroke(){
+ let width=NaN;
+ if(obj.dataset&&obj.dataset.afStrokeW!==undefined)width=parseFloat(obj.dataset.afStrokeW);
+ if(!Number.isFinite(width))width=parseFloat(obj.style.getPropertyValue('--af-stroke-w')||'');
+ if(!Number.isFinite(width))width=parseFloat(obj.style.borderTopWidth||st.borderTopWidth||'');
+ // A zero-width stroke is not a visible source colour.
+ if(Number.isFinite(width)&&width<=0)return null;
+ let v='';
+ if(obj.dataset&&obj.dataset.afStrokeColor!==undefined)v=obj.dataset.afStrokeColor;
+ if(!normalized(v))v=obj.style.getPropertyValue('--af-stroke-color')||obj.style.borderColor||st.borderTopColor||st.borderColor;
+ return normalized(v);
+}
+
+// Eyedropper samples the visible source colour. The active Fill/Stroke target only
+// decides where that sampled colour is applied afterwards.
+return readStoredFill() || readStoredStroke();
+}
+function eyeObjectAt(x,y){
+let stack=[];
+try{stack=document.elementsFromPoint(x,y)||[];}catch(e){}
+for(const node of stack){
+ if(!node||!art.contains(node))continue;
+ const obj=node.closest&&node.closest('.af-object');
+ if(obj&&art.contains(obj))return obj;
+}
+return null;
+}
+function eyePick(x,y,hitNode){
+let obj=null;
+if(hitNode&&hitNode.closest){
+ const candidate=hitNode.closest('.af-object');
+ if(candidate&&art.contains(candidate))obj=candidate;
+}
+if(!obj)obj=eyeObjectAt(x,y);
+let color=eyeReadObjectColor(obj);
+if(!obj){
+ const r=art.getBoundingClientRect();
+ if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom){
+   color=eyeNormalize(getComputedStyle(art).backgroundColor)||'#FFFFFF';
+ }
+}
+// Never turn an object transparent just because the clicked source has no visible colour.
+if(!color||color==='transparent'){
+ if(statusStrong)statusStrong.textContent='Eyedropper';
+ if(statusText)statusText.textContent='이 영역에는 가져올 색상이 없어요. 색이 보이는 도형을 클릭해 주세요.';
+ return false;
+}
+applyColor(color);
+eyeSampleSet(color);
+eyeStop('색상을 가져왔어요: '+color);
+return true;
+}
+
+// Button: target-level handler, with click fallback for browsers that synthesize clicks differently.
+let eyeLastToggle=0;
+function eyeToggleFromEvent(e){
+const now=Date.now();
+if(now-eyeLastToggle<180)return;
+eyeLastToggle=now;
+if(e){e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();}
+eyeStart();
+}
+eyeBtn.addEventListener('pointerdown',eyeToggleFromEvent,true);
+eyeBtn.addEventListener('click',eyeToggleFromEvent,true);
+
+// Window capture runs before the tutorial's artboard handlers, preserving the existing selection.
+window.addEventListener('pointerdown',function(e){
+if(!eyeActive)return;
+if(e.target===eyeBtn||eyeBtn.contains(e.target))return;
+if(!art.contains(e.target))return;
+e.preventDefault();
+e.stopPropagation();
+if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+eyePick(e.clientX,e.clientY,e.target);
+},true);
+
+// Use physical KeyI too, so the shortcut works even while the Korean keyboard layout is active.
+window.addEventListener('keydown',function(e){
+const tag=((e.target&&e.target.tagName)||'').toLowerCase();
+if(tag==='input'||tag==='textarea'||tag==='select'||(e.target&&e.target.isContentEditable))return;
+if(e.key==='Escape'&&eyeActive){
+ e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+ eyeStop('');return;
+}
+/* KeyI is captured earlier by afEyedropperEarlyKeyV43 so other shortcut handlers cannot swallow it. */
+},true);
+
+eyeSampleSet(fill||'#EBEBEB');
+})();
 
 })();
 
@@ -20623,5 +20883,159 @@ html body #af-tutorial #afStart .af-start-card h2{
   word-spacing: 0.02em !important;
 }
 </style>
+
+<style id="afFinalGameChoiceV34">
+#af-tutorial .af-final-game-card-v34{
+  width:min(860px,94%)!important;
+  padding:38px 34px 34px!important;
+}
+#af-tutorial .af-final-game-card-v34 h2{
+  font-size:clamp(29px,3.4vw,44px)!important;
+  line-height:1.24!important;
+  letter-spacing:-.012em!important;
+  word-spacing:.035em!important;
+}
+#af-tutorial .af-final-game-card-v34 p{
+  margin:14px 0 24px!important;
+  font-size:15px!important;
+}
+#af-tutorial .af-final-game-grid-v34{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-top:10px;
+}
+#af-tutorial .af-final-game-link-v34{
+  min-width:0;
+  min-height:150px;
+  padding:18px 12px 16px;
+  border-radius:20px;
+  background:#20263a;
+  border:1px solid rgba(120,170,255,.26);
+  color:#fff!important;
+  text-decoration:none!important;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  box-shadow:0 12px 30px rgba(0,0,0,.20);
+  transition:transform .16s ease,background .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+#af-tutorial .af-final-game-link-v34:hover{
+  transform:translateY(-4px);
+  background:#182c55;
+  border-color:#4f91ff;
+  box-shadow:0 16px 34px rgba(0,104,255,.22);
+}
+#af-tutorial .af-final-game-link-v34:active{transform:translateY(-1px)}
+#af-tutorial .af-final-game-icon-v34{
+  min-width:58px;
+  height:54px;
+  padding:0 12px;
+  border-radius:16px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#0068ff;
+  color:#fff;
+  font-size:22px;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:.02em;
+  box-shadow:0 8px 22px rgba(0,104,255,.25);
+}
+#af-tutorial .af-final-game-link-v34 strong{
+  font-size:18px;
+  line-height:1.2;
+  font-weight:900;
+  letter-spacing:-.005em;
+  word-break:keep-all;
+}
+#af-tutorial .af-final-game-link-v34 small{
+  color:#b9c7dc;
+  font-size:12px;
+  line-height:1.3;
+  font-weight:700;
+  word-break:keep-all;
+}
+@media(max-width:720px){
+  #af-tutorial .af-final-game-card-v34{padding:30px 20px 24px!important;}
+  #af-tutorial .af-final-game-grid-v34{grid-template-columns:1fr;gap:10px;}
+  #af-tutorial .af-final-game-link-v34{min-height:98px;display:grid;grid-template-columns:66px minmax(0,1fr);grid-template-rows:auto auto;text-align:left;justify-items:start;padding:12px 14px;column-gap:12px;}
+  #af-tutorial .af-final-game-icon-v34{grid-row:1/3;min-width:54px;width:54px;height:54px;padding:0;}
+  #af-tutorial .af-final-game-link-v34 strong{align-self:end;}
+  #af-tutorial .af-final-game-link-v34 small{align-self:start;}
+}
+</style>
+
+
+<style id="afFinalConsultLinkV35">
+#af-tutorial .af-final-consult-link-v35{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:250px;
+  min-height:48px;
+  margin-top:22px;
+  padding:0 22px;
+  border-radius:999px;
+  border:1px solid rgba(120,170,255,.28);
+  background:rgba(255,255,255,.05);
+  color:#dbeafe!important;
+  text-decoration:none!important;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.015em;
+  transition:transform .16s ease, background .16s ease, border-color .16s ease, color .16s ease;
+}
+#af-tutorial .af-final-consult-link-v35:hover{
+  transform:translateY(-2px);
+  background:rgba(0,104,255,.12);
+  border-color:#4f91ff;
+  color:#fff!important;
+}
+#af-tutorial .af-final-consult-link-v35:active{
+  transform:translateY(0);
+}
+@media(max-width:720px){
+  #af-tutorial .af-final-consult-link-v35{
+    width:100%;
+    min-width:0;
+    margin-top:16px;
+  }
+}
+</style>
+
+
+<style id="afEyedropperNativeStyleV41">
+#af-tutorial .af-colour-targets{
+  width:142px!important;min-width:142px!important;flex:0 0 142px!important;height:66px!important;overflow:visible!important;
+}
+#af-tutorial #afBigStroke{left:3px!important;top:4px!important;}
+#af-tutorial #afBigFill{left:23px!important;right:auto!important;top:23px!important;bottom:auto!important;}
+#af-tutorial #afNoColor{left:0!important;bottom:0!important;}
+#af-tutorial .af-eyedropper-v41{
+  position:absolute!important;left:66px!important;top:11px!important;width:38px!important;height:38px!important;
+  display:grid!important;place-items:center!important;padding:0!important;border:0!important;border-radius:5px!important;
+  background:transparent!important;color:#e7e9ee!important;cursor:pointer!important;pointer-events:auto!important;z-index:50!important;
+  transition:background .14s ease,color .14s ease,box-shadow .14s ease!important;
+}
+#af-tutorial .af-eyedropper-v41 svg{width:34px!important;height:34px!important;display:block!important;pointer-events:none!important;}
+#af-tutorial .af-eyedropper-v41:hover{background:rgba(255,255,255,.08)!important;color:#fff!important;}
+#af-tutorial .af-eyedropper-v41.active{background:#17334a!important;color:#78d8ff!important;box-shadow:0 0 0 2px rgba(56,189,248,.55)!important;}
+#af-tutorial .af-eyedropper-sample-v41{
+  position:absolute!important;left:101px!important;top:15px!important;width:29px!important;height:29px!important;border-radius:50%!important;
+  background:#111827;border:2px solid #0b0d12!important;box-shadow:0 0 0 2px rgba(255,255,255,.28),inset 0 0 0 1px rgba(255,255,255,.10)!important;
+  pointer-events:none!important;z-index:49!important;
+}
+#af-tutorial.af-eyedropper-mode-v41 #afArtboard,
+#af-tutorial.af-eyedropper-mode-v41 #afArtboard *{cursor:crosshair!important;}
+#af-tutorial.af-eyedropper-mode-v41 #afArtboard{box-shadow:0 0 0 2px rgba(56,189,248,.78),0 0 0 5px rgba(56,189,248,.13)!important;}
+#af-tutorial .af-colour-topline{gap:4px!important;}
+#af-tutorial .af-colour-hexbox{min-width:88px!important;}
+#af-tutorial .af-colour-hexbox b{min-width:70px!important;padding-left:8px!important;padding-right:8px!important;}
+</style>
+
 </body>
 </html>
