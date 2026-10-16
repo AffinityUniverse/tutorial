@@ -2980,7 +2980,7 @@ el.classList.remove("creating");bindObject(el);selectOne(el);
 if(shapeKind==="circle"&&m().type==="silhouette")snapToGuide(el,"resize");
 saveHistory();checkGuideDone();
 if(shapeKind==="rect"&&m().key==="makeRect")next("네모 생성 완료!");
-else celebrate(el,"도형 생성 완료!");
+else if(m().type!=="silhouette")celebrate(el,"도형 생성 완료!");
 }
 document.addEventListener("pointermove",move);
 document.addEventListener("pointerup",up);
@@ -5175,6 +5175,7 @@ if(!selected.length)return;
 const sx=e.clientX,sy=e.clientY,start=selectionBox(selected),ratio=start.width/start.height;
 const items=selected.map(el=>({el,left:el.offsetLeft,top:el.offsetTop,width:el.offsetWidth,height:el.offsetHeight}));
 const min=afV41MinSize();
+let afV47DidResize=false;
 
 function move(ev){
 let dx=ev.clientX-sx,dy=ev.clientY-sy;
@@ -5185,6 +5186,7 @@ if(handle.includes("s"))nh=start.height+dy;
 if(handle.includes("n")){nh=start.height-dy;nt=start.top+dy;}
 nw=Math.max(min,nw);
 nh=Math.max(min,nh);
+if(Math.abs(nw-start.width)>=8 || Math.abs(nh-start.height)>=8) afV47DidResize=true;
 if(isShift(ev)){
 if(nw/nh>ratio)nh=nw/ratio;else nw=nh*ratio;
 nw=Math.max(min,nw);
@@ -5220,7 +5222,12 @@ updateGuideState();
 renderBox();
 saveHistory();
 checkGuideDone();
-if(m().key==="resize"||m().key==="transform")next("크기 조절 완료!");
+if(m().key==="resize"||m().key==="transform"){
+  const now=selectionBox(selected);
+  const changed=afV47DidResize || Math.abs(now.width-start.width)>=8 || Math.abs(now.height-start.height)>=8;
+  if(changed) next("크기 조절 완료!");
+  else say("파란 선택 박스의 점을 잡고 실제로 크기를 바꿔주세요.");
+}
 }
 
 document.addEventListener("pointermove",move);
@@ -15713,7 +15720,7 @@ const afV106MissionTemplate=[
 {title:'그룹 만들기',desc:'Shift를 누른 채 도형을 함께 선택한 뒤 ctrl(command)+G로 그룹을 만들어보세요.',tip:'Shift를 누른 채 다른 도형을 누르면 여러 개를 함께 선택할 수 있어요.',key:'group'},
 {title:'그룹 해제하기',desc:'그룹이 선택된 상태에서 ctrl(command)+shift+G를 눌러 언그룹해보세요.',tip:'그룹을 다시 낱개의 레이어로 풀 때는 ctrl(command)+shift+G를 사용합니다.',key:'ungroup'},
 {title:'면 컬러 모두 다르게',desc:'레이어 순서 변화를 잘 볼 수 있도록 도형 3개 이상의 면 색상을 모두 다르게 바꿔보세요.',tip:'도형마다 Fill 색상을 다르게 바꿔보세요.',key:'multiColor'},
-{title:'도형 겹쳐놓기',desc:'색이 다른 도형 3개 이상을 서로 겹쳐놓아 레이어 순서 변화를 볼 준비를 해보세요.',tip:'Move Tool로 도형을 드래그해 서로 겹치게 놓아보세요.',key:'layerOverlapPrep'},
+{title:'도형 겹쳐놓기',desc:'색이 다른 도형 3개 이상을 서로 겹쳐놓아 레이어 순서 변화를 볼 준비를 해보세요.',tip:'Move Tool(무브툴)을 선택한 뒤 도형을 드래그해 서로 겹치게 놓아보세요.',key:'layerOverlapPrep'},
 {title:'레이어 한 칸 뒤로',desc:'맨 마지막에 만든 도형을 선택하고 레이어 순서 메뉴에서 한 칸 뒤로를 눌러보세요.',tip:'선택한 도형이 한 단계 뒤로 내려가는 것을 눈으로 확인해보세요.',key:'layerOrderDown'},
 {title:'레이어 가장 뒤로',desc:'같은 도형을 선택한 상태에서 레이어 순서 메뉴의 맨 뒤로를 눌러보세요.',tip:'가장 뒤쪽으로 이동합니다.',key:'layerOrderBack'},
 {title:'레이어 한 칸 앞으로',desc:'방금 뒤로 보낸 도형을 선택하고 한 칸 앞으로를 눌러보세요.',tip:'뒤쪽에 있던 도형이 한 단계 앞으로 올라오는 변화를 확인해보세요.',key:'layerOrderUp'},
@@ -16103,8 +16110,8 @@ const T=[
 {key:'strokeColor',title:'선 컬러',desc:'Stroke 색을 바꿔보세요.',tip:'바깥쪽 뚫린 동그라미 Stroke를 직접 누른 뒤 선 색을 골라보세요.'},
 {key:'stroke',title:'선 두께',desc:'선 두께를 올려보세요.',tip:'오른쪽 Stroke 탭을 직접 누른 뒤 Width를 올려보세요.'},
 {key:'noColor',title:'선 컬러 빼기',desc:'선 색을 빼보세요.',tip:'Colour 패널의 빨간 사선 아이콘을 눌러 선 색을 빼보세요.'},
-{key:'moveDrag',title:'무브툴 이동',desc:'도형을 옮겨보세요.',tip:'왼쪽 맨 위 무브툴을 누른 뒤 도형을 드래그해 위치를 옮겨보세요.'},
-{key:'resize',title:'크기 조절',desc:'크기를 바꿔보세요.',tip:'선택 박스 모서리 핸들을 끌어 크기를 바꿔보세요.'},
+{key:'moveDrag',title:'무브툴 이동',desc:'Move Tool(무브툴)을 선택한 뒤 도형을 드래그해 이동해보세요.',tip:'왼쪽 맨 위 검정색 Move Tool 아이콘을 먼저 누른 뒤, 도형을 꾹 눌러 원하는 위치로 드래그하세요.'},
+{key:'resize',title:'크기 조절',desc:'파란 선택 박스의 모서리 점을 잡고 도형 크기를 바꿔보세요.',tip:'도형 주변 여백이 아니라 파란색 모서리 핸들을 꾹 누른 채 드래그해야 통과됩니다.'},
 {key:'rotate',title:'회전',desc:'도형을 돌려보세요.',tip:'선택 박스 위 노란 점을 잡고 원하는 방향으로 돌려보세요.'},
 {key:'clearAllAfterRotate',title:'도형 삭제',desc:'도형을 삭제해보세요.',tip:'회전한 도형을 선택한 뒤 Delete, Backspace 또는 휴지통으로 지워보세요.'},
 {key:'freeShapeBeforeFill',title:'Shift 정비율 도형',desc:'원하는 도형을 고른 뒤 Shift를 누르고 만들어보세요.',tip:'원하는 모양을 고른 뒤 Shift를 누른 채 드래그하면 정비율로 만들어집니다.'},
@@ -16113,11 +16120,11 @@ const T=[
 {key:'copyPaste',title:'복제',desc:'ctrl(command)+C/V로 복제해보세요.',tip:'도형을 선택하고 ctrl(command)+C, 이어서 ctrl(command)+V를 눌러보세요.'},
 {key:'ctrlJ',title:'복제',desc:'ctrl(command)+J로 복제해보세요.',tip:'이전에 복제한 간격이 있으면 ctrl(command)+J가 그 값을 그대로 이어서 복제합니다.'},
 {key:'multiColor',title:'도형마다 컬러 다르게',desc:'면 색을 모두 다르게 바꿔보세요.',tip:'도형을 하나씩 선택해 Fill 색이 모두 다르게 보이도록 바꿔보세요.'},
-{key:'layerOverlapPrep',title:'레이어 순서',desc:'도형을 겹쳐 준비해보세요.',tip:'레이어 순서 변화가 잘 보이도록 도형들을 서로 겹쳐 놓아보세요.'},
-{key:'layerOrderDown',title:'레이어 순서',desc:'한 칸 뒤로 보내보세요.',tip:'맨 마지막에 만든 도형을 선택한 뒤 상단 레이어 순서 메뉴에서 한 칸 뒤로를 눌러보세요.'},
-{key:'layerOrderBack',title:'레이어 순서',desc:'가장 뒤로 보내보세요.',tip:'같은 도형을 선택한 상태에서 레이어 순서 메뉴의 가장 뒤로를 눌러보세요.'},
-{key:'layerOrderUp',title:'레이어 순서',desc:'한 칸 앞으로 올려보세요.',tip:'뒤로 보낸 도형을 다시 선택한 뒤 한 칸 앞으로를 눌러보세요.'},
-{key:'layerOrderFront',title:'레이어 순서',desc:'가장 앞으로 올려보세요.',tip:'마지막으로 같은 도형을 선택한 뒤 가장 앞으로를 눌러 맨 위로 올려보세요.'},
+{key:'layerOverlapPrep',title:'도형 겹쳐놓기',desc:'색이 다른 도형을 서로 겹쳐서 준비해보세요.',tip:'Move Tool(무브툴)을 선택한 뒤 도형을 드래그해 서로 겹쳐 놓아보세요.'},
+{key:'layerOrderDown',title:'레이어 순서',desc:'한 칸 뒤로 보내보세요.',tip:'상단 레이어 순서 메뉴 또는 Cmd(Ctrl)+[ 단축키를 사용해보세요.'},
+{key:'layerOrderBack',title:'레이어 순서',desc:'가장 뒤로 보내보세요.',tip:'레이어 순서 메뉴 또는 Cmd(Ctrl)+Shift+[ 단축키를 사용해보세요.'},
+{key:'layerOrderUp',title:'레이어 순서',desc:'한 칸 앞으로 올려보세요.',tip:'레이어 순서 메뉴 또는 Cmd(Ctrl)+] 단축키를 사용해보세요.'},
+{key:'layerOrderFront',title:'레이어 순서',desc:'가장 앞으로 올려보세요.',tip:'레이어 순서 메뉴 또는 Cmd(Ctrl)+Shift+] 단축키를 사용해보세요.'},
 {type:'silhouette',animal:'bunny',title:'토끼 실루엣',desc:'토끼를 만들어보세요.',tip:'오른쪽 위 샘플과 희미한 가이드를 보며 동그라미로 토끼를 채워보세요.'},
 {key:'renameAfterSil',animal:'bunny',title:'파일명 변경',desc:'이름을 바꿔보세요.',tip:'상단 파일 이름 칸을 클릭해 이름을 바꾸고 Enter를 눌러보세요.'},
 {type:'export',animal:'bunny',key:'bunnyExport',title:'이미지 저장',desc:'토끼를 저장해보세요.',tip:'가이드는 화면에 보이더라도 Export PNG로 저장할 때 자동으로 빠집니다.'},
@@ -16591,8 +16598,8 @@ if(enter)hint('선 색을 빼보세요.');
 return;
 }
 if(cur.key==='moveDrag'){
-try{setTool('move',false);moveTool.classList.add('glow')}catch(e){}
-if(enter)hint('움직여보세요.');
+try{moveTool.classList.add('glow')}catch(e){}
+if(enter)hint('왼쪽 맨 위 Move Tool(무브툴)을 먼저 선택한 뒤 도형을 드래그해보세요.');
 return;
 }
 if(cur.key==='freeShapeBeforeFill'){
@@ -16938,6 +16945,230 @@ return afV110CheckGuideDoneBefore.apply(this,arguments);
 };
 afV110EnsureMissionControls();
 afV110RefreshControls();
+})();
+
+/* AF_V122_SILHOUETTE_PART_MATCH_PRAISE
+   Each silhouette circle can satisfy only one guide target.
+   A near-enough part snaps to the guide, shows Great!, and the final part advances automatically.
+*/
+(function(){
+const afV122State={session:'',celebrated:new Set(),advancing:false,praiseTimer:0,audio:null};
+
+function afV122Cur(){try{return m&&m();}catch(e){return null;}}
+function afV122Session(cur){return cur&&cur.type==='silhouette'?String(mission||0)+':'+String(cur.animal||''):'';}
+function afV122ResetSession(cur){
+  const key=afV122Session(cur);
+  if(key!==afV122State.session){
+    afV122State.session=key;
+    afV122State.celebrated=new Set();
+    afV122State.advancing=false;
+  }
+}
+function afV122Rect(el){try{return rectOf(el);}catch(e){return null;}}
+function afV122Intersect(a,b){
+  const left=Math.max(a.left,b.left),top=Math.max(a.top,b.top);
+  const right=Math.min(a.left+a.width,b.left+b.width),bottom=Math.min(a.top+a.height,b.top+b.height);
+  const w=Math.max(0,right-left),h=Math.max(0,bottom-top),area=w*h;
+  return {area,target:area/Math.max(1,b.width*b.height),object:area/Math.max(1,a.width*a.height)};
+}
+function afV122MeasureRect(r,t){
+  if(!r||!t)return null;
+  const rw=Math.max(1,r.width),rh=Math.max(1,r.height),tw=Math.max(1,t.width),th=Math.max(1,t.height);
+  const rcx=r.left+rw/2,rcy=r.top+rh/2;
+  const dist=Math.hypot(rcx-t.cx,rcy-t.cy);
+  const maxT=Math.max(tw,th),minT=Math.min(tw,th);
+  const wr=rw/tw,hr=rh/th;
+  const hit=afV122Intersect(r,t);
+  const small=maxT<58||minT<34;
+  const centerLimit=small?Math.max(11,maxT*.58):Math.max(18,maxT*.34);
+  const minScale=small?.46:.58;
+  const maxScale=small?1.95:1.62;
+  const sizeOkay=wr>=minScale&&wr<=maxScale&&hr>=minScale&&hr<=maxScale;
+  const overlapNeed=small?.38:.50;
+  const fit=(dist<=centerLimit&&sizeOkay)||(hit.target>=overlapNeed&&wr>=minScale&&wr<=maxScale&&hr>=minScale&&hr<=maxScale);
+  const score=(dist/Math.max(12,maxT))*1.8+Math.abs(Math.log(Math.max(.05,wr)))+Math.abs(Math.log(Math.max(.05,hr)))-(hit.target*.36);
+  return {fit,score,dist,wr,hr,hit};
+}
+function afV122Measure(el,t){
+  if(!el||!el.dataset||el.dataset.kind!=='circle')return null;
+  return afV122MeasureRect(afV122Rect(el),t);
+}
+function afV122Assignments(animal,exclude){
+  const targets=guideTargets(animal)||[];
+  const circles=objects().filter(o=>o&&o.dataset&&o.dataset.kind==='circle'&&o!==exclude);
+  const pairs=[];
+  circles.forEach(el=>targets.forEach(t=>{
+    const q=afV122Measure(el,t);
+    if(q&&q.fit)pairs.push({el,t,score:q.score});
+  }));
+  pairs.sort((a,b)=>a.score-b.score);
+  const usedObjects=new Set(),usedTargets=new Set(),out=[];
+  pairs.forEach(p=>{
+    if(usedObjects.has(p.el)||usedTargets.has(p.t.index))return;
+    usedObjects.add(p.el);usedTargets.add(p.t.index);out.push(p);
+  });
+  return out;
+}
+function afV122BestTarget(el,animal){
+  const occupied=new Set(afV122Assignments(animal,el).map(p=>p.t.index));
+  const r=afV122Rect(el);
+  if(!r)return null;
+  const candidates=[];
+  (guideTargets(animal)||[]).forEach(t=>{
+    if(occupied.has(t.index))return;
+    const q=afV122MeasureRect(r,t);
+    if(q&&q.fit)candidates.push({t,score:q.score});
+  });
+  candidates.sort((a,b)=>a.score-b.score);
+  return candidates.length?candidates[0].t:null;
+}
+
+getMatchedGuideIndices=function(animal){
+  return afV122Assignments(animal,null).map(p=>p.t.index).sort((a,b)=>a-b);
+};
+
+const afV122SnapBefore=snapToGuide;
+snapToGuide=function(el,mode){
+  const cur=afV122Cur();
+  if(cur&&cur.type==='silhouette'&&el&&el.dataset&&el.dataset.kind==='circle'){
+    /* v123: do NOT move or resize the user's circle to the guide.
+       Only judge whether the circle is close enough to a free guide target. */
+    const t=afV122BestTarget(el,cur.animal);
+    try{delete el.dataset.snap;}catch(e){}
+    try{clearHot();if(t&&typeof hot==='function')hot(t.index);}catch(e){}
+    try{updateGuideState();}catch(e){}
+    return !!t;
+  }
+  return afV122SnapBefore?afV122SnapBefore.apply(this,arguments):false;
+};
+
+function afV122Great(target,label,done,total){
+  try{
+    const old=root.querySelector('#afV122PartPraise');
+    if(old)old.remove();
+    const word='Great!';
+    const el=document.createElement('div');
+    el.id='afV122PartPraise';
+    el.className='au-celebrate-v20';
+    el.setAttribute('role','status');
+    el.setAttribute('aria-live','polite');
+    el.setAttribute('aria-label',word);
+    const hues=[345,22,46,152,186,218,266,312];
+    Array.from(word).forEach((ch,i)=>{
+      const sp=document.createElement('span');
+      sp.className='au-celebrate-letter-v20';
+      sp.textContent=ch;
+      sp.style.setProperty('--i',String(i));
+      sp.style.setProperty('--h',String(hues[i%hues.length]));
+      el.appendChild(sp);
+    });
+    root.appendChild(el);
+    void el.offsetWidth;
+    requestAnimationFrame(()=>el.classList.add('show'));
+    clearTimeout(afV122State.praiseTimer);
+    afV122State.praiseTimer=setTimeout(()=>{try{if(el.isConnected)el.remove();}catch(e){}},1450);
+    try{sparkle(target||missionCard,20);}catch(e){}
+  }catch(e){}
+  try{
+    if(afV122State.audio){afV122State.audio.pause();afV122State.audio.currentTime=0;}
+    const src=successVoiceSources&&successVoiceSources[0];
+    if(src){const a=new Audio(src);a.preload='auto';a.volume=1;afV122State.audio=a;a.play().catch(()=>{});}
+  }catch(e){}
+  try{
+    if(statusStrong)statusStrong.textContent='Great!';
+    if(statusText)statusText.textContent=(label||'한 부분')+'이 실루엣에 맞았어요. '+done+' / '+total;
+  }catch(e){}
+}
+
+const afV122RenderMissionBefore=renderMission;
+renderMission=function(){
+  const result=afV122RenderMissionBefore.apply(this,arguments);
+  const cur=afV122Cur();
+  afV122ResetSession(cur);
+  return result;
+};
+
+const afV122CheckBefore=checkGuideDone;
+checkGuideDone=function(){
+  const cur=afV122Cur();
+  if(!cur||cur.type!=='silhouette')return afV122CheckBefore?afV122CheckBefore.apply(this,arguments):undefined;
+  afV122ResetSession(cur);
+  let targets=[];let matched=[];
+  try{targets=guideTargets(cur.animal)||[];matched=getMatchedGuideIndices(cur.animal)||[];}catch(e){}
+  try{updateGuideState();}catch(e){}
+  const matchedSet=new Set(matched);
+  const newly=matched.filter(i=>!afV122State.celebrated.has(i));
+  newly.forEach(i=>afV122State.celebrated.add(i));
+  if(newly.length){
+    const idx=newly[newly.length-1];
+    const g=(guides[cur.animal]||[])[idx]||{};
+    const matchedPair=afV122Assignments(cur.animal,null).find(p=>p.t.index===idx);
+    afV122Great(matchedPair&&matchedPair.el,g.label||'도형',matchedSet.size,targets.length);
+  }
+  if(targets.length&&matchedSet.size>=targets.length&&!afV122State.advancing){
+    afV122State.advancing=true;
+    const session=afV122State.session;
+    setTimeout(()=>{
+      const now=afV122Cur();
+      if(!now||now.type!=='silhouette'||afV122Session(now)!==session)return;
+      let still=[];try{still=getMatchedGuideIndices(now.animal)||[];}catch(e){}
+      if(still.length<targets.length){afV122State.advancing=false;return;}
+      try{afV110SetMission(Math.min((mission||0)+1,missions.length-1));}catch(e){try{next((animalNames[now.animal]||'캐릭터')+' 완성!');}catch(x){}}
+    },1050);
+  }
+};
+})();
+
+/* AF_V123_RENAME_AFTER_SILHOUETTE_ENTER_FIX
+   File-name missions after bunny/puppy must advance only after the name was
+   actually changed and Enter was pressed. A window-capture observer schedules
+   the check after IME composition has had time to commit the final character. */
+(function(){
+let afV123RenameSession='';
+let afV123RenameStart='';
+function afV123Cur(){try{return typeof m==='function'?m():null;}catch(e){return null;}}
+function afV123IsRename(cur){return !!(cur&&(cur.key==='renameAfterSil'||cur.key==='renameAfterPuppy'));}
+function afV123TargetKey(cur){return cur&&cur.key==='renameAfterSil'?'bunnyExport':'puppyExport';}
+function afV123Remember(){
+  const cur=afV123Cur();
+  if(!afV123IsRename(cur)){afV123RenameSession='';afV123RenameStart='';return;}
+  const session=String(mission||0)+':'+cur.key;
+  if(session!==afV123RenameSession){
+    afV123RenameSession=session;
+    afV123RenameStart=(fileName&&fileName.value||'').trim();
+  }
+}
+function afV123Advance(expectedKey){
+  const cur=afV123Cur();
+  if(!cur||cur.key!==expectedKey||!afV123IsRename(cur))return false;
+  const value=(fileName&&fileName.value||'').trim();
+  if(!value||value.toLowerCase()==='untitled'||value===afV123RenameStart){
+    try{say('이름을 바꾼 뒤 Enter를 눌러주세요.');fileName.focus();fileName.select();}catch(e){}
+    return false;
+  }
+  const nextKey=afV123TargetKey(cur);
+  const idx=missions.findIndex(function(item){return item&&item.key===nextKey;});
+  if(idx<0)return false;
+  mission=idx;
+  try{fileName.blur();}catch(e){}
+  try{renderMission();}catch(e){}
+  return true;
+}
+const afV123RenderBefore=renderMission;
+renderMission=function(){
+  const result=afV123RenderBefore.apply(this,arguments);
+  afV123Remember();
+  return result;
+};
+window.addEventListener('keydown',function(e){
+  if(e.target!==fileName||e.key!=='Enter')return;
+  const cur=afV123Cur();
+  if(!afV123IsRename(cur))return;
+  const expected=cur.key;
+  /* Do not cancel the native key event here: Korean IME may still be committing
+     its last syllable. Validate just after the event finishes instead. */
+  setTimeout(function(){afV123Advance(expected);},80);
+},true);
 })();
 
 
@@ -17453,15 +17684,54 @@ for(const node of stack){
 }
 return null;
 }
+function eyeReadReferenceColor(hitNode,x,y){
+if(!hitNode||!hitNode.closest)return null;
+const sample=hitNode.closest('.af-character-sample');
+if(!sample||!art.contains(sample))return null;
+let node=hitNode;
+if(node===sample||String(node.tagName||'').toLowerCase()==='svg')return null;
+if(!(node instanceof Element))return null;
+const svgNode=node.closest('ellipse,circle,path,rect,polygon,polyline,line');
+if(!svgNode||!sample.contains(svgNode))return null;
+const attrFill=svgNode.getAttribute('fill');
+const cssFill=getComputedStyle(svgNode).fill;
+const attrStroke=svgNode.getAttribute('stroke');
+const cssStroke=getComputedStyle(svgNode).stroke;
+const fillColor=(String(attrFill||'').toLowerCase()==='none')?null:(eyeNormalize(attrFill)||eyeNormalize(cssFill));
+const strokeColor=(String(attrStroke||'').toLowerCase()==='none')?null:(eyeNormalize(attrStroke)||eyeNormalize(cssStroke));
+// Prefer the paint that is actually under the pointer. This lets the eyedropper
+// pick the brown outline separately from the pink/cream fill in the reference.
+try{
+ const ctm=svgNode.getScreenCTM&&svgNode.getScreenCTM();
+ if(ctm&&typeof DOMPoint!=='undefined'){
+   const pt=new DOMPoint(x,y).matrixTransform(ctm.inverse());
+   const onStroke=strokeColor&&typeof svgNode.isPointInStroke==='function'&&svgNode.isPointInStroke(pt);
+   const inFill=fillColor&&typeof svgNode.isPointInFill==='function'&&svgNode.isPointInFill(pt);
+   if(onStroke)return strokeColor;
+   if(inFill)return fillColor;
+ }
+}catch(e){}
+return (fillColor&&fillColor!=='transparent'?fillColor:null) || (strokeColor&&strokeColor!=='transparent'?strokeColor:null);
+}
 function eyePick(x,y,hitNode){
 let obj=null;
+let referenceSample=null;
 if(hitNode&&hitNode.closest){
+ referenceSample=hitNode.closest('.af-character-sample');
  const candidate=hitNode.closest('.af-object');
  if(candidate&&art.contains(candidate))obj=candidate;
 }
-if(!obj)obj=eyeObjectAt(x,y);
-let color=eyeReadObjectColor(obj);
-if(!obj){
+// Reference artwork is a valid eyedropper source. Read its SVG paint directly
+// before falling back to normal artboard objects.
+let color=referenceSample?eyeReadReferenceColor(hitNode,x,y):null;
+if(referenceSample&&!color){
+ if(statusStrong)statusStrong.textContent='Eyedropper';
+ if(statusText)statusText.textContent='레퍼런스의 색이 있는 부분을 클릭해 주세요.';
+ return false;
+}
+if(!obj&&!referenceSample)obj=eyeObjectAt(x,y);
+if(!color)color=eyeReadObjectColor(obj);
+if(!obj&&!referenceSample){
  const r=art.getBoundingClientRect();
  if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom){
    color=eyeNormalize(getComputedStyle(art).backgroundColor)||'#FFFFFF';
@@ -17470,7 +17740,7 @@ if(!obj){
 // Never turn an object transparent just because the clicked source has no visible colour.
 if(!color||color==='transparent'){
  if(statusStrong)statusStrong.textContent='Eyedropper';
- if(statusText)statusText.textContent='이 영역에는 가져올 색상이 없어요. 색이 보이는 도형을 클릭해 주세요.';
+ if(statusText)statusText.textContent='이 영역에는 가져올 색상이 없어요. 색이 보이는 도형이나 레퍼런스를 클릭해 주세요.';
  return false;
 }
 applyColor(color);
@@ -17514,6 +17784,350 @@ if(e.key==='Escape'&&eyeActive){
 },true);
 
 eyeSampleSet(fill||'#EBEBEB');
+})();
+
+
+/* AF_V53_FINAL_MISSION_FLOW_FIX
+   Keep mission validation inside the main tutorial scope so it can use
+   m(), objects(), del(), next(), renderMission(), and applyColor(). */
+(function(){
+  let afFinalLastMissionKey='';
+  let afFinalMultiBaseline=null;
+  let afFinalMultiBaselineMission=-1;
+  let afFinalMultiTouched=new Set();
+  let afFinalMultiCompleting=false;
+  let afFinalOverlapCompleting=false;
+  let afFinalOverlapBaseline=null;
+  let afFinalOverlapBaselineMission=-1;
+
+  function afFinalCur(){
+    try{return typeof m==='function'?m():null;}catch(e){return null;}
+  }
+  function afFinalShapes(){
+    try{
+      return (typeof objects==='function'?objects():[]).filter(function(el){
+        return el && el.dataset && el.dataset.kind && el.isConnected &&
+          (el.offsetWidth||parseFloat(el.style.width)||0)>8 &&
+          (el.offsetHeight||parseFloat(el.style.height)||0)>8;
+      });
+    }catch(e){return [];}
+  }
+  function afFinalValidColor(value){
+    const v=String(value||'').trim().toLowerCase().replace(/\s+/g,'');
+    if(!v||v==='transparent'||v==='rgba(0,0,0,0)')return '';
+    return v;
+  }
+  function afFinalFill(el){
+    if(!el)return '';
+    try{
+      if(typeof afV96FillColor==='function'){
+        const v=afFinalValidColor(afV96FillColor(el));
+        if(v)return v;
+      }
+    }catch(e){}
+    try{
+      const cs=getComputedStyle(el);
+      return afFinalValidColor(el.dataset&&el.dataset.afFillColor) ||
+        afFinalValidColor(el.style.getPropertyValue('--af-fill-color')) ||
+        afFinalValidColor(el.style.getPropertyValue('--heart-fill')) ||
+        afFinalValidColor(el.style.backgroundColor) ||
+        afFinalValidColor(el.style.background) ||
+        afFinalValidColor(cs.backgroundColor) ||
+        afFinalValidColor(cs.color);
+    }catch(e){return '';}
+  }
+
+  function afFinalCaptureMultiBaseline(){
+    afFinalMultiBaseline=new Map();
+    afFinalMultiBaselineMission=typeof mission==='number'?mission:-1;
+    afFinalMultiTouched=new Set();
+    afFinalShapes().forEach(function(el){afFinalMultiBaseline.set(el,afFinalFill(el));});
+    afFinalMultiCompleting=false;
+  }
+  function afFinalEnsureMultiBaseline(){
+    const cur=afFinalCur();
+    if(!cur||cur.key!=='multiColor')return false;
+    if(!afFinalMultiBaseline || afFinalMultiBaselineMission!==(typeof mission==='number'?mission:-1)){
+      afFinalCaptureMultiBaseline();
+      return false;
+    }
+    /* If a new shape is created during this mission it also becomes a required
+       colour-change target. */
+    afFinalShapes().forEach(function(el){
+      if(!afFinalMultiBaseline.has(el))afFinalMultiBaseline.set(el,afFinalFill(el));
+    });
+    return true;
+  }
+  function afFinalMarkSelectedColorTouched(){
+    const cur=afFinalCur();
+    if(!cur||cur.key!=='multiColor'||activeTarget!=='fill')return;
+    try{
+      const live=new Set(afFinalShapes());
+      (selected||[]).forEach(function(el){
+        if(el&&live.has(el))afFinalMultiTouched.add(el);
+      });
+    }catch(e){}
+  }
+  function afFinalMultiState(){
+    if(!afFinalEnsureMultiBaseline())return {ready:false,changed:0,total:afFinalMultiBaseline?afFinalMultiBaseline.size:0};
+    const shapes=afFinalShapes();
+    if(shapes.length<3)return {ready:false,changed:0,total:shapes.length,allUnique:false};
+    const live=new Set(shapes);
+    /* Remove deleted objects from the completion set. */
+    Array.from(afFinalMultiTouched).forEach(function(el){if(!live.has(el))afFinalMultiTouched.delete(el);});
+    const finalColors=shapes.map(afFinalFill);
+    const changed=shapes.filter(function(el){return afFinalMultiTouched.has(el);}).length;
+    const allTouched=changed===shapes.length;
+    const allVisible=finalColors.every(Boolean);
+    const allUnique=(new Set(finalColors)).size===shapes.length;
+    return {ready:allTouched&&allVisible&&allUnique,changed:changed,total:shapes.length,allUnique:allUnique};
+  }
+  function afFinalUpdateMultiStatus(state){
+    try{
+      if(!state||!statusText)return;
+      if(state.ready){statusText.textContent='모든 도형의 Fill 컬러가 서로 다르게 변경됐어요.';return;}
+      const total=state.total||0;
+      statusText.textContent='현재 '+(state.changed||0)+' / '+total+'개 컬러 변경 · 모든 도형의 Fill 색을 각각 다르게 바꿔주세요.';
+    }catch(e){}
+  }
+  function afFinalCheckMulti(){
+    const cur=afFinalCur();
+    if(!cur||cur.key!=='multiColor'||afFinalMultiCompleting)return false;
+    const state=afFinalMultiState();
+    afFinalUpdateMultiStatus(state);
+    if(!state.ready)return false;
+    afFinalMultiCompleting=true;
+    setTimeout(function(){
+      try{
+        const now=afFinalCur();
+        if(now&&now.key==='multiColor')next('모든 도형 컬러 변경 완료!');
+      }catch(e){}
+      afFinalMultiCompleting=false;
+    },70);
+    return true;
+  }
+
+  function afFinalRect(el){
+    try{
+      const r=el.getBoundingClientRect();
+      return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};
+    }catch(e){return null;}
+  }
+  function afFinalCaptureOverlapBaseline(){
+    afFinalOverlapBaseline=new Map();
+    afFinalOverlapBaselineMission=typeof mission==='number'?mission:-1;
+    afFinalShapes().forEach(function(el){
+      const r=afFinalRect(el);
+      if(r)afFinalOverlapBaseline.set(el,{left:r.left,top:r.top});
+    });
+    afFinalOverlapCompleting=false;
+  }
+  function afFinalOverlapMoved(){
+    if(!afFinalOverlapBaseline || afFinalOverlapBaselineMission!==(typeof mission==='number'?mission:-1))return false;
+    const shapes=afFinalShapes();
+    for(const el of shapes){
+      const before=afFinalOverlapBaseline.get(el);
+      const now=afFinalRect(el);
+      if(!before||!now)continue;
+      if(Math.abs(now.left-before.left)>=4 || Math.abs(now.top-before.top)>=4)return true;
+    }
+    return false;
+  }
+  function afFinalHasOverlap(){
+    const shapes=afFinalShapes();
+    if(shapes.length<2)return false;
+    for(let i=0;i<shapes.length;i++){
+      const a=afFinalRect(shapes[i]);
+      if(!a)continue;
+      for(let j=i+1;j<shapes.length;j++){
+        const b=afFinalRect(shapes[j]);
+        if(!b)continue;
+        const w=Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left));
+        const h=Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top));
+        const area=w*h;
+        const minArea=Math.max(1,Math.min(a.width*a.height,b.width*b.height));
+        if(area>=64 && area/minArea>=0.04)return true;
+      }
+    }
+    return false;
+  }
+  function afFinalCheckOverlap(){
+    const cur=afFinalCur();
+    if(!cur||cur.key!=='layerOverlapPrep'||afFinalOverlapCompleting)return false;
+    if(!afFinalOverlapMoved())return false;
+    if(!afFinalHasOverlap())return false;
+    afFinalOverlapCompleting=true;
+    setTimeout(function(){
+      try{
+        const now=afFinalCur();
+        if(now&&now.key==='layerOverlapPrep')next('겹쳐놓기 완료!');
+      }catch(e){}
+      afFinalOverlapCompleting=false;
+    },70);
+    return true;
+  }
+
+  /* Mission transition guard: older colour validators are not allowed to skip
+     multiColor until EVERY current shape changed and final fills are unique. */
+  const afFinalNextBefore=next;
+  next=function(msg){
+    const cur=afFinalCur();
+    if(cur&&cur.key==='multiColor'){
+      const state=afFinalMultiState();
+      afFinalUpdateMultiStatus(state);
+      if(!state.ready){
+        try{if(typeof say==='function')say('현재 만들어진 모든 도형의 Fill 컬러를 각각 다르게 바꿔주세요.');}catch(e){}
+        return false;
+      }
+    }
+    return afFinalNextBefore.apply(this,arguments);
+  };
+
+  /* Final delete path: the actual tutorial mission is clearAllAfterRotate.
+     Advance when a selected object was genuinely removed, regardless of trash
+     button vs Delete/Backspace. */
+  const afFinalDelBefore=del;
+  del=function(){
+    const beforeCur=afFinalCur();
+    const beforeKey=beforeCur&&beforeCur.key||'';
+    const beforeCount=afFinalShapes().length;
+    const result=afFinalDelBefore.apply(this,arguments);
+    const afterCount=afFinalShapes().length;
+    if((beforeKey==='clearAllAfterRotate'||beforeKey==='delete') && afterCount<beforeCount){
+      setTimeout(function(){
+        try{
+          const now=afFinalCur();
+          if(now&&now.key===beforeKey)next('도형 삭제 완료!');
+        }catch(e){}
+      },35);
+    }
+    return result;
+  };
+  try{
+    const trash=root.querySelector('#afTrashBtn');
+    if(trash)trash.onclick=function(e){
+      if(e){e.preventDefault();e.stopPropagation();}
+      return del();
+    };
+  }catch(e){}
+
+  /* Wrap the FINAL renderMission so baselines are captured exactly when entering
+     the colour mission, and already-overlapped shapes can complete overlap prep. */
+  const afFinalRenderBefore=renderMission;
+  renderMission=function(){
+    const result=afFinalRenderBefore.apply(this,arguments);
+    const cur=afFinalCur();
+    const key=cur&&cur.key||'';
+    if(key==='multiColor' && afFinalLastMissionKey!=='multiColor'){
+      afFinalCaptureMultiBaseline();
+      afFinalUpdateMultiStatus({ready:false,changed:0,total:afFinalMultiBaseline.size});
+    }
+    if(key!=='multiColor' && afFinalLastMissionKey==='multiColor'){
+      afFinalMultiBaseline=null;
+      afFinalMultiBaselineMission=-1;
+      afFinalMultiTouched=new Set();
+      afFinalMultiCompleting=false;
+    }
+    if(key==='layerOverlapPrep' && afFinalLastMissionKey!=='layerOverlapPrep'){
+      afFinalCaptureOverlapBaseline();
+      try{
+        if(missionTitle)missionTitle.textContent='도형 겹쳐놓기';
+        if(missionDesc)missionDesc.textContent='색이 다른 도형을 서로 겹쳐서 준비해보세요.';
+        if(statusStrong)statusStrong.textContent='Move Tool';
+        if(statusText)statusText.textContent='Move Tool(무브툴)을 선택한 뒤 도형을 직접 움직여 서로 겹쳐 놓아보세요.';
+      }catch(e){}
+    }
+    if(key!=='layerOverlapPrep' && afFinalLastMissionKey==='layerOverlapPrep'){
+      afFinalOverlapBaseline=null;
+      afFinalOverlapBaselineMission=-1;
+      afFinalOverlapCompleting=false;
+    }
+    afFinalLastMissionKey=key;
+    return result;
+  };
+
+  /* Colour wheel, eyedropper, and swatches all eventually call applyColor or
+     finish with pointerup. Observe both paths. */
+  if(typeof applyColor==='function'){
+    const afFinalApplyColorBefore=applyColor;
+    applyColor=function(){
+      afFinalMarkSelectedColorTouched();
+      const result=afFinalApplyColorBefore.apply(this,arguments);
+      setTimeout(afFinalCheckMulti,30);
+      return result;
+    };
+  }
+  /* The Colour wheel paints through afV73InstantApplyColor while dragging, so
+     track that path too. This was the missing path that could leave multiColor
+     permanently stuck even though the visible colours had changed. */
+  if(typeof afV73InstantApplyColor==='function'){
+    const afFinalInstantColorBefore=afV73InstantApplyColor;
+    afV73InstantApplyColor=function(){
+      afFinalMarkSelectedColorTouched();
+      const result=afFinalInstantColorBefore.apply(this,arguments);
+      setTimeout(afFinalCheckMulti,30);
+      return result;
+    };
+  }
+  document.addEventListener('pointerup',function(){
+    setTimeout(function(){afFinalCheckMulti();afFinalCheckOverlap();},80);
+  },true);
+  document.addEventListener('keyup',function(){
+    setTimeout(function(){afFinalCheckMulti();afFinalCheckOverlap();},80);
+  },true);
+
+  /* The current mission menu is rebuilt several times. Capture the click at the
+     document level before legacy target handlers can swallow "처음으로". */
+  document.addEventListener('click',function(e){
+    const t=e.target&&e.target.closest?e.target.closest(
+      '#afV99MissionMenu [data-v110-action="first"],'+
+      '#afV99MissionMenu [data-v106-action="first"],'+
+      '#afV99MissionMenu [data-v102-action="first"],'+
+      '#afV99MissionMenu [data-v101-action="first"]'
+    ):null;
+    if(!t||!root.contains(t))return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+    try{
+      /* '처음으로'는 미션 번호뿐 아니라 캐릭터 제작 상태도 함께 초기화한다.
+         토끼/강아지 가이드가 다음 미션 화면에 남지 않도록 Artboard와 Guide 상태를 먼저 비운다. */
+      if(typeof afV98HardResetArtboard==='function'){
+        afV98HardResetArtboard();
+      }else{
+        try{ if(typeof hideGuide==='function') hideGuide(); }catch(_e){}
+        try{
+          if(guideOverlay){
+            guideOverlay.innerHTML='';
+            guideOverlay.style.display='none';
+            guideOverlay.dataset.afV98Animal='';
+          }
+          currentGuideAnimal=null;
+        }catch(_e){}
+      }
+      mission=0;
+      const menu=root.querySelector('#afV99MissionMenu');
+      const btn=root.querySelector('#afV99MissionBtn');
+      if(menu)menu.classList.remove('show');
+      if(btn)btn.classList.remove('active');
+      afFinalMultiBaseline=null;
+      afFinalMultiBaselineMission=-1;
+      afFinalMultiTouched=new Set();
+      afFinalLastMissionKey='';
+      renderMission();
+      if(typeof say==='function')say('처음 미션으로 이동했어요.');
+    }catch(err){console.warn('first mission navigation failed',err);}
+  },true);
+
+  /* Initialize state for whichever mission is currently visible. */
+  try{
+    const cur=afFinalCur();
+    afFinalLastMissionKey=cur&&cur.key||'';
+    if(cur&&cur.key==='multiColor'){
+      afFinalCaptureMultiBaseline();
+      afFinalUpdateMultiStatus({ready:false,changed:0,total:afFinalMultiBaseline.size});
+    }
+  }catch(e){}
 })();
 
 })();
@@ -21035,6 +21649,335 @@ html body #af-tutorial #afStart .af-start-card h2{
 #af-tutorial .af-colour-topline{gap:4px!important;}
 #af-tutorial .af-colour-hexbox{min-width:88px!important;}
 #af-tutorial .af-colour-hexbox b{min-width:70px!important;padding-left:8px!important;padding-right:8px!important;}
+</style>
+
+
+<script id="afLayerShortcutMissionFixV48">
+/* AF_LAYER_SHORTCUT_MISSION_FIX_V48
+   One final shortcut path for layer ordering. It works during regular missions
+   and bunny/puppy silhouette work, and advances a layer-order mission only
+   after the visual order really changes. */
+(function(){
+  'use strict';
+  const root=document.getElementById('af-tutorial');
+  if(!root)return;
+
+  try{
+    if(typeof handleLayerOrderShortcut==='function'){
+      document.removeEventListener('keydown',handleLayerOrderShortcut,true);
+      window.removeEventListener('keydown',handleLayerOrderShortcut,true);
+      root.removeEventListener('keydown',handleLayerOrderShortcut,true);
+    }
+  }catch(e){}
+
+  function currentMission(){
+    try{return typeof m==='function'?m():null;}catch(e){return null;}
+  }
+  function selectedKeys(){
+    const keys=new Set();
+    try{
+      (selected||[]).forEach(function(el){
+        if(!el)return;
+        if(el.dataset&&el.dataset.group)keys.add('group:'+el.dataset.group);
+        else if(el.id)keys.add('el:'+el.id);
+      });
+    }catch(e){}
+    return keys;
+  }
+  function rows(){
+    try{
+      if(typeof afV53Rows==='function')return afV53Rows()||[];
+      if(typeof afV48TopRows==='function')return afV48TopRows()||[];
+      if(typeof afV43LayerRows==='function')return afV43LayerRows()||[];
+    }catch(e){}
+    return [];
+  }
+  function applyRows(list){
+    if(typeof afV53ApplyRows==='function')return afV53ApplyRows(list);
+    if(typeof afV48ApplyRowOrder==='function')return afV48ApplyRowOrder(list);
+    if(typeof afV43ApplyRowOrder==='function')return afV43ApplyRowOrder(list);
+  }
+  function signature(){
+    try{return rows().map(function(r){return r.key;}).join('|');}catch(e){return '';}
+  }
+  function ensureSelection(){
+    if(typeof selected!=='undefined'&&selected&&selected.length)return true;
+    const cur=currentMission();
+    if(cur&&/^layerOrder/.test(cur.key||'')){
+      try{
+        const list=(typeof objects==='function'?objects():[]).filter(Boolean);
+        if(list.length){
+          const last=list.slice().sort(function(a,b){
+            const ao=parseInt((a.dataset&&a.dataset.afV106CreateOrder)||(a.dataset&&a.dataset.createSerial)||'0',10)||0;
+            const bo=parseInt((b.dataset&&b.dataset.afV106CreateOrder)||(b.dataset&&b.dataset.createSerial)||'0',10)||0;
+            if(ao!==bo)return bo-ao;
+            return (parseInt(b.style.zIndex,10)||0)-(parseInt(a.style.zIndex,10)||0);
+          })[0];
+          if(last&&typeof setSelected==='function')setSelected([last]);
+        }
+      }catch(e){}
+    }
+    return !!(typeof selected!=='undefined'&&selected&&selected.length);
+  }
+  function reorder(action){
+    if(!ensureSelection()){
+      try{if(typeof fail==='function')fail('먼저 움직일 레이어를 선택해볼까요?');}catch(e){}
+      return false;
+    }
+    const before=signature();
+    const all=rows();
+    if(!all.length)return false;
+    const keys=selectedKeys();
+    const picked=all.filter(function(r){return keys.has(r.key);});
+    if(!picked.length)return false;
+    let nextRows;
+    if(action==='front'){
+      nextRows=picked.concat(all.filter(function(r){return !keys.has(r.key);}));
+    }else if(action==='back'){
+      nextRows=all.filter(function(r){return !keys.has(r.key);}).concat(picked);
+    }else if(action==='up'){
+      const first=all.findIndex(function(r){return keys.has(r.key);});
+      nextRows=all.filter(function(r){return !keys.has(r.key);});
+      nextRows.splice(Math.max(0,first-1),0,...picked);
+    }else if(action==='down'){
+      const indices=all.map(function(r,i){return keys.has(r.key)?i:-1;}).filter(function(i){return i>=0;});
+      const last=indices.length?indices[indices.length-1]:-1;
+      nextRows=all.filter(function(r){return !keys.has(r.key);});
+      nextRows.splice(Math.min(nextRows.length,last+1),0,...picked);
+    }else return false;
+
+    try{applyRows(nextRows);}catch(e){return false;}
+    try{if(typeof renderLayers==='function')renderLayers();}catch(e){}
+    try{if(typeof renderBox==='function')renderBox();}catch(e){}
+    try{if(typeof saveHistory==='function')saveHistory();}catch(e){}
+    const after=signature();
+    return before!==after;
+  }
+
+  function shortcutAction(e){
+    if(!(e.metaKey||e.ctrlKey))return '';
+    const code=e.code||'';
+    const key=e.key||'';
+    const left=code==='BracketLeft'||key==='['||key==='{'||e.keyCode===219||e.which===219;
+    const right=code==='BracketRight'||key===']'||key==='}'||e.keyCode===221||e.which===221;
+    if(!left&&!right)return '';
+    const far=!!(e.shiftKey||key==='{'||key==='}');
+    if(left&&far)return 'back';
+    if(left)return 'down';
+    if(right&&far)return 'front';
+    return 'up';
+  }
+
+  function onKeyDown(e){
+    const action=shortcutAction(e);
+    if(!action||e.repeat)return;
+
+    const cur=currentMission();
+    const target=e.target;
+    const tag=(target&&target.tagName||'').toLowerCase();
+    const typing=tag==='input'||tag==='textarea'||tag==='select'||(target&&target.isContentEditable);
+    const renameMission=cur&&(cur.key==='renameAfterSil'||cur.key==='renameAfterPuppy');
+    if(typing&&renameMission)return;
+    if(typing&&target&&typeof target.blur==='function')try{target.blur();}catch(err){}
+
+    e.preventDefault();
+    e.stopPropagation();
+    if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+
+    const missionKey=cur&&cur.key||'';
+    const expected={
+      layerOrderDown:'down',
+      layerOrderBack:'back',
+      layerOrderUp:'up',
+      layerOrderFront:'front'
+    }[missionKey]||'';
+    const changed=reorder(action);
+
+    if(changed){
+      if(expected===action){
+        setTimeout(function(){
+          try{
+            const now=currentMission();
+            if(now&&now.key===missionKey&&typeof next==='function')next('레이어 순서 변경 성공!');
+          }catch(err){}
+        },90);
+      }else{
+        try{if(typeof say==='function')say(action==='back'?'맨 뒤로 이동했어요.':action==='down'?'한 칸 뒤로 이동했어요.':action==='up'?'한 칸 앞으로 이동했어요.':'맨 앞으로 이동했어요.');}catch(err){}
+      }
+    }else if(expected===action){
+      try{if(typeof say==='function')say('레이어가 실제로 이동할 수 있도록 다른 순서의 도형을 선택해보세요.');}catch(err){}
+    }
+  }
+
+  window.addEventListener('keydown',onKeyDown,true);
+})();
+</script>
+
+
+<!-- AF_V49_COMPACT_COLOUR_AND_SILHOUETTE_STACK -->
+<style id="afV49SidebarBalance">
+/* Colour panel: slightly more compact so Layers gets more vertical space. */
+#af-tutorial .af-top-panel{
+  flex:0 0 clamp(300px,37vh,400px)!important;
+  max-height:400px!important;
+}
+#af-tutorial #afColourPanel{
+  padding:8px 12px!important;
+}
+#af-tutorial #afColourPanel .af-wheel-wrap{
+  margin:0 auto 2px!important;
+  padding:0 0 2px!important;
+}
+#af-tutorial #afColourPanel .af-wheel-stage,
+#af-tutorial #afColourPanel #afWheelCanvas{
+  width:220px!important;
+  height:220px!important;
+}
+#af-tutorial #afColourPanel .af-range{
+  margin-top:1px!important;
+}
+/* Give Layers the reclaimed space. */
+#af-tutorial .af-layer-panel{
+  min-height:300px!important;
+  flex:1 1 0!important;
+}
+#af-tutorial #afLayerList{
+  min-height:0!important;
+  flex:1 1 auto!important;
+}
+@media(max-height:760px){
+  #af-tutorial .af-top-panel{
+    flex-basis:280px!important;
+    max-height:280px!important;
+  }
+  #af-tutorial #afColourPanel .af-wheel-stage,
+  #af-tutorial #afColourPanel #afWheelCanvas{
+    width:190px!important;
+    height:190px!important;
+  }
+  #af-tutorial .af-layer-panel{min-height:260px!important;}
+}
+</style>
+<script id="afV49SilhouetteStackFix">
+(function(){
+  const root=document.getElementById('af-tutorial');
+  if(!root||typeof createShape!=='function')return;
+
+  const previousCreateShape=createShape;
+  createShape=function(kind,x,y,w,h,creating){
+    const el=previousCreateShape.apply(this,arguments);
+    try{
+      const cur=typeof m==='function'?m():null;
+      if(cur&&cur.type==='silhouette'&&el&&el.dataset&&el.dataset.kind==='circle'){
+        const list=typeof objects==='function'?objects():Array.from(root.querySelectorAll('#afArtboard .af-object'));
+        const otherZ=list.filter(function(o){return o!==el;}).map(function(o){
+          const n=parseInt(o.style.zIndex,10);
+          return Number.isFinite(n)?n:0;
+        });
+        const maxZ=Math.max(259,...otherZ);
+        el.style.zIndex=String(maxZ+1);
+        delete el.dataset.snap;
+        el.dataset.afV49NewestOnTop='1';
+
+        /* v106 normalizer preserves current visual order, so normalize after
+           assigning the new object to the top. Manual layer changes remain intact. */
+        if(typeof afV106NormalizeSilhouetteStack==='function')afV106NormalizeSilhouetteStack();
+        if(typeof renderLayers==='function')renderLayers();
+      }
+    }catch(err){console.warn('V49 silhouette stack fix',err);}
+    return el;
+  };
+
+  /* Clarify the silhouette workflow without forcing an automatic sample order. */
+  if(typeof renderMission==='function'){
+    const previousRenderMission=renderMission;
+    renderMission=function(){
+      const result=previousRenderMission.apply(this,arguments);
+      try{
+        const cur=typeof m==='function'?m():null;
+        if(cur&&cur.type==='silhouette'&&typeof statusText!=='undefined'&&statusText){
+          statusText.textContent='새로 만든 도형은 위에 쌓여요. 예시와 겹침이 다르면 Layers에서 앞/뒤 순서를 직접 조정해보세요.';
+        }
+      }catch(err){}
+      return result;
+    };
+  }
+})();
+</script>
+
+
+<style id="afPraiseSingleStageFixV51">
+/* v51: remove the nested double-scale that made praise look like a small word
+   followed by a second delayed enlargement. Keep one coherent pop only. */
+#af-tutorial .au-celebrate-v20{
+  transform:translate(-50%,-50%) scale3d(.86,.86,1)!important;
+}
+#af-tutorial .au-celebrate-v20.show{
+  animation:auPraiseSingleStageV51 1.86s cubic-bezier(.18,.86,.2,1) both!important;
+}
+#af-tutorial .au-celebrate-v20.show .au-celebrate-letter-v20{
+  transform:none!important;
+  animation:auReferencePraiseShimmerV20 .36s ease-in-out .20s 2 alternate!important;
+  will-change:filter!important;
+}
+@keyframes auPraiseSingleStageV51{
+  0%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale3d(.86,.86,1);
+    filter:brightness(1.08) saturate(1.03);
+  }
+  8%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale3d(.92,.92,1);
+  }
+  24%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale3d(1.10,1.10,1);
+    filter:brightness(1.05) saturate(1.02);
+  }
+  40%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale3d(.985,.985,1);
+  }
+  56%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale3d(1.025,1.025,1);
+  }
+  72%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale3d(1,1,1);
+    filter:brightness(1.02) saturate(1.01);
+  }
+  86%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale3d(1,1,1);
+  }
+  100%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale3d(1.01,1.01,1);
+    filter:brightness(1) saturate(1);
+  }
+}
+</style>
+
+
+
+
+
+
+<style id="afEyedropperReferenceV536">
+#af-tutorial.af-eyedropper-mode-v41 #afGuideOverlay .af-character-sample{
+  pointer-events:auto!important;
+  cursor:crosshair!important;
+}
+#af-tutorial.af-eyedropper-mode-v41 #afGuideOverlay .af-character-sample svg,
+#af-tutorial.af-eyedropper-mode-v41 #afGuideOverlay .af-character-sample svg *{
+  pointer-events:visiblePainted!important;
+  cursor:crosshair!important;
+}
+#af-tutorial.af-eyedropper-mode-v41 #afGuideOverlay .af-character-sample{
+  box-shadow:0 0 0 3px rgba(56,189,248,.45),0 0 22px rgba(56,189,248,.28)!important;
+}
 </style>
 
 </body>
