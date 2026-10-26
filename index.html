@@ -2436,7 +2436,9 @@ if(step.dx||step.dy||step.dw||step.dh)lastPowerDuplicate=step;
 }
 
 active.forEach(o=>snapToGuide(o,"move"));
-clearHot();updateGuideState();renderBox();saveHistory();checkGuideDone();
+clearHot();updateGuideState();renderBox();saveHistory();
+// Merely grabbing/reselecting a circle must not trigger a silhouette success.
+if(m().type!=="silhouette"||moved)checkGuideDone();
 const cur=m();
 if(moved&&!duplicated&&cur.key==="moveDrag")next("드래그 이동 성공!");
 if(moved&&duplicated&&cur.key==="ctrlDuplicate"&&commandStart&&!usedShift&&!altStart)next("ctrl(command) 복제 성공!");
@@ -5175,7 +5177,6 @@ if(!selected.length)return;
 const sx=e.clientX,sy=e.clientY,start=selectionBox(selected),ratio=start.width/start.height;
 const items=selected.map(el=>({el,left:el.offsetLeft,top:el.offsetTop,width:el.offsetWidth,height:el.offsetHeight}));
 const min=afV41MinSize();
-let afV47DidResize=false;
 
 function move(ev){
 let dx=ev.clientX-sx,dy=ev.clientY-sy;
@@ -5186,7 +5187,6 @@ if(handle.includes("s"))nh=start.height+dy;
 if(handle.includes("n")){nh=start.height-dy;nt=start.top+dy;}
 nw=Math.max(min,nw);
 nh=Math.max(min,nh);
-if(Math.abs(nw-start.width)>=8 || Math.abs(nh-start.height)>=8) afV47DidResize=true;
 if(isShift(ev)){
 if(nw/nh>ratio)nh=nw/ratio;else nw=nh*ratio;
 nw=Math.max(min,nw);
@@ -5221,11 +5221,12 @@ clearHot();
 updateGuideState();
 renderBox();
 saveHistory();
-checkGuideDone();
+// A click, translation, or intermediate size change that was undone is not a resize.
+const genuinelyResized=items.some(it=>it.el&&selected.includes(it.el)&&
+  (Math.abs(it.el.offsetWidth-it.width)>=8||Math.abs(it.el.offsetHeight-it.height)>=8));
+if(m().type!=="silhouette"||genuinelyResized)checkGuideDone();
 if(m().key==="resize"||m().key==="transform"){
-  const now=selectionBox(selected);
-  const changed=afV47DidResize || Math.abs(now.width-start.width)>=8 || Math.abs(now.height-start.height)>=8;
-  if(changed) next("크기 조절 완료!");
+  if(genuinelyResized)next("크기 조절 완료!");
   else say("파란 선택 박스의 점을 잡고 실제로 크기를 바꿔주세요.");
 }
 }
@@ -16672,6 +16673,7 @@ statusStrong.textContent='Silhouette';
 statusText.textContent=c.animal==='bunny'
 ?'오른쪽 위 샘플과 희미한 가이드를 보며 동그라미로 토끼를 채워보세요.'
 :'희미한 가이드를 보며 동그라미로 강아지 실루엣을 채워보세요.';
+statusText.textContent+=' 완성되면 상단의 통과 버튼을 눌러 다음 단계로 이동해주세요.';
 }
 copyMissionCopied=false;
 fillTargetClicked=false;
@@ -16878,7 +16880,7 @@ controls.innerHTML=''
 + '<button type=\"button\" data-v110-action=\"animal\" data-animal=\"puppy\">강아지 만들기</button>'
 + '</div>'
 +'</div>'
-+'<button type=\"button\" class=\"af-v99-small-btn af-v99-pass\" id=\"afV110PassBtn\">완료</button>'
++'<button type=\"button\" class=\"af-v99-small-btn af-v99-pass\" id=\"afV110PassBtn\">통과</button>'
 +'<button type=\"button\" class=\"af-v99-small-btn af-v110-finish\" id=\"afV110SilhouetteDoneBtn\">완성</button>';
 if(exportButton&&exportButton.parentNode===topActions)topActions.insertBefore(controls,exportButton);
 else topActions.insertBefore(controls,topActions.firstChild);
@@ -16949,10 +16951,10 @@ afV110RefreshControls();
 
 /* AF_V122_SILHOUETTE_PART_MATCH_PRAISE
    Each silhouette circle can satisfy only one guide target.
-   A near-enough part snaps to the guide, shows Great!, and the final part advances automatically.
+   A newly matched, distinct circle can earn praise once; completion waits for the Pass button.
 */
 (function(){
-const afV122State={session:'',celebrated:new Set(),advancing:false,praiseTimer:0,audio:null};
+const afV122State={session:'',celebrated:new WeakSet(),celebratedTargets:new Set(),advancing:false,praiseTimer:0,audio:null};
 
 function afV122Cur(){try{return m&&m();}catch(e){return null;}}
 function afV122Session(cur){return cur&&cur.type==='silhouette'?String(mission||0)+':'+String(cur.animal||''):'';}
@@ -16960,7 +16962,8 @@ function afV122ResetSession(cur){
   const key=afV122Session(cur);
   if(key!==afV122State.session){
     afV122State.session=key;
-    afV122State.celebrated=new Set();
+    afV122State.celebrated=new WeakSet();
+    afV122State.celebratedTargets=new Set();
     afV122State.advancing=false;
   }
 }
@@ -17096,25 +17099,30 @@ checkGuideDone=function(){
   let targets=[];let matched=[];
   try{targets=guideTargets(cur.animal)||[];matched=getMatchedGuideIndices(cur.animal)||[];}catch(e){}
   try{updateGuideState();}catch(e){}
-  const matchedSet=new Set(matched);
-  const newly=matched.filter(i=>!afV122State.celebrated.has(i));
-  newly.forEach(i=>afV122State.celebrated.add(i));
+  const matchedPairs=afV122Assignments(cur.animal,null);
+  const matchedSet=new Set(matchedPairs.map(p=>p.t.index));
+  // One reward per actual circle AND guide part, never per re-grab or reassignment.
+  const newly=matchedPairs.filter(p=>!afV122State.celebrated.has(p.el)&&
+    !afV122State.celebratedTargets.has(p.t.index));
+  newly.forEach(p=>{
+    afV122State.celebrated.add(p.el);
+    afV122State.celebratedTargets.add(p.t.index);
+  });
   if(newly.length){
-    const idx=newly[newly.length-1];
-    const g=(guides[cur.animal]||[])[idx]||{};
-    const matchedPair=afV122Assignments(cur.animal,null).find(p=>p.t.index===idx);
-    afV122Great(matchedPair&&matchedPair.el,g.label||'도형',matchedSet.size,targets.length);
+    const part=newly[newly.length-1];
+    const g=(guides[cur.animal]||[])[part.t.index]||{};
+    afV122Great(part.el,g.label||'도형',matchedSet.size,targets.length);
   }
-  if(targets.length&&matchedSet.size>=targets.length&&!afV122State.advancing){
+  if(targets.length&&matchedSet.size>=targets.length){
     afV122State.advancing=true;
-    const session=afV122State.session;
-    setTimeout(()=>{
-      const now=afV122Cur();
-      if(!now||now.type!=='silhouette'||afV122Session(now)!==session)return;
-      let still=[];try{still=getMatchedGuideIndices(now.animal)||[];}catch(e){}
-      if(still.length<targets.length){afV122State.advancing=false;return;}
-      try{afV110SetMission(Math.min((mission||0)+1,missions.length-1));}catch(e){try{next((animalNames[now.animal]||'캐릭터')+' 완성!');}catch(x){}}
-    },1050);
+    if(statusStrong)statusStrong.textContent='실루엣 완성!';
+    if(statusText)statusText.textContent='잘했어요! 상단의 통과 버튼을 눌러 다음 단계로 이동해주세요.';
+    if(missionDesc)missionDesc.textContent=(animalNames[cur.animal]||'캐릭터')+' 만들기 완료! 상단의 통과 버튼을 눌러주세요.';
+  }else if(afV122State.advancing){
+    // If a placed circle is moved away, retract the completion prompt.
+    afV122State.advancing=false;
+    if(statusStrong)statusStrong.textContent='Silhouette';
+    if(statusText)statusText.textContent='가이드를 맞춰보세요. 완성되면 상단의 통과 버튼을 눌러주세요.';
   }
 };
 })();
