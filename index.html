@@ -73,7 +73,7 @@ html,body,#af-tutorial{-webkit-touch-callout:none}
   font-family: 'LaundryGothic', sans-serif !important;
 }
 </style>
-<div id="af-tutorial" data-au-owner="AFFINITY-UNIVERSE" data-au-build="AU-TUT-20260824-02" data-au-fingerprint="B640BFCA817E5101" data-au-distribution="protected" class="laundry-gothic" style="font-family:'LaundryGothic',sans-serif;"><div class="af-start" id="afStart"><div class="af-start-card"><div class="af-start-badge">AFFINITY UNIVERSE</div><h2>Mini Designer Tutorial</h2><p>도형 만들기, 컬러, 스트로크, 레이어, Export PNG까지<br>차근차근 먼저 익혀봐요.</p><button type="button" id="afStartBtn">튜토리얼 시작하기</button></div></div><div class="af-toast" id="afToast">Good Job!</div><div class="af-app"><header class="af-topbar"><section class="af-mission-top" id="afMissionCard"><div class="af-mission-kicker"><span>TODAY MISSION</span><b id="afMissionStep">1 / 24</b></div><div class="af-mission-body"><strong id="afMissionTitle">파일 이름 바꾸기</strong><span id="afMissionDesc">상단의 Untitled를 눌러 원하는 이름으로 바꿔보세요.</span></div></section><div class="af-top-actions"><button type="button" class="af-export" id="afExport">Export PNG</button></div></header><div class="af-workspace"><aside class="af-toolbar"><button type="button" class="af-tool active" data-tool="move" id="afMoveTool" title="Move Tool (V)"><svg viewBox="0 0 32 32"><path d="M7 3 L23 18 L15.5 18.8 L19.5 27.5 L15.6 29.2 L11.6 20.5 L7 26 Z" fill="#050505" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></button><div class="af-shape-wrap"><button type="button" class="af-tool" data-tool="shape" id="afShapeTool" title="Shape Tool (U)"><span id="afShapeIcon" class="af-icon af-icon-rect"></span></button><div class="af-shape-menu" id="afShapeMenu"><button type="button" data-shape="rect"><span class="af-icon af-icon-rect"></span></button><button type="button" data-shape="circle"><span class="af-icon af-icon-circle"></span></button><button type="button" data-shape="round"><span class="af-icon af-icon-round"></span></button><button type="button" data-shape="triangle"><span class="af-icon af-icon-triangle"></span></button><button type="button" data-shape="star">★</button></div></div><div class="af-mini-targets"><button type="button" id="afMiniFill" class="active"></button><button type="button" id="afMiniStroke"></button></div></aside><main class="af-main"><div class="af-docbar"><input id="afFileName" type="text" value="Untitled" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" draggable="false"><span>@ 71%</span><em>V 무브툴 / U 도형툴 / ctrl(command)+Z / ctrl(command)+shift+Z / ctrl(command)+C,V / ctrl(command)+J / ctrl(command)+shift 드래그 / ctrl(command)+G / ctrl(command)+shift+G / 레이어 순서 단축키는 cmd(ctrl)+[ ], cmd(ctrl)+shift+[ ] 사용</em></div><div class="af-stage"><div class="af-artboard-wrap"><div class="af-artboard-label">Artboard1</div><div class="af-artboard" id="afArtboard"><div class="af-empty" id="afEmpty">도형 도구를 선택한 뒤<br>흰색 Artboard에서 드래그해보세요.</div><div class="af-drag-guide" id="afDragGuide"><strong>드래그란?</strong><span>마우스를 누른 채 움직이고 원하는 위치에서 손을 떼는 동작이에요.</span><i></i></div><div class="af-guide-overlay" id="afGuideOverlay"></div></div></div></div><div class="af-bottombar"><div><strong id="afStatusStrong">Ready</strong><span id="afStatusText">튜토리얼을 시작해보세요.</span></div><div><span id="afSelectionInfo">No Selection</span><span id="afCoord">X:0 / Y:0</span></div></div></main><aside class="af-sidebar"><section class="af-panel af-top-panel"><div class="af-tabs"><button type="button" class="active" data-panel="colour">Colour</button><button type="button" data-panel="stroke">Stroke</button></div><div class="af-tab-body active" id="afColourPanel"><div class="af-colour-topline"><div class="af-colour-targets"><button type="button" id="afBigFill" class="active" title="면 색상"></button><button type="button" id="afBigStroke" title="선 색상"></button><button type="button" id="afNoColor" title="색상 없음"></button><button type="button" id="afEyedropperV41" class="af-eyedropper-v41" title="스포이드 (I) · 색상 가져오기" aria-label="스포이드" aria-pressed="false"><svg viewBox="0 0 36 36" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22.4 4.5a4.8 4.8 0 0 1 6.8 0l2.3 2.3a4.8 4.8 0 0 1 0 6.8l-4.2 4.2-9.1-9.1 4.2-4.2Z"/><path d="M21.5 11.7 9.7 23.5a5.3 5.3 0 0 0-1.4 2.5l-.9 3.4 3.4-.9a5.3 5.3 0 0 0 2.5-1.4l11.8-11.8"/><path d="m8.7 24.6 2.7 2.7"/></svg></button><span id="afEyedropperSampleV41" class="af-eyedropper-sample-v41" title="스포이드로 가져온 색상" aria-hidden="true"></span></div><div class="af-colour-hexbox"><span>#:</span><b id="afHexText">EBEBEB</b></div></div><div class="af-wheel-wrap"><div class="af-wheel-stage" id="afWheelStage"><canvas id="afWheelCanvas" width="290" height="290"></canvas><button type="button" id="afHuePointer" class="af-wheel-pointer af-hue-pointer" aria-label="Hue pointer"></button><button type="button" id="afTriPointer" class="af-wheel-pointer af-tri-pointer" aria-label="Triangle pointer"></button></div></div><label class="af-range"><span>Opacity</span><input type="range" id="afOpacity" min="0" max="100" value="100"><b id="afOpacityText">100%</b></label></div><div class="af-tab-body" id="afStrokePanel"><div class="af-stroke-row"><span>Style</span><button type="button" class="active" data-stroke-style="none">None</button><button type="button" data-stroke-style="solid">Solid</button><button type="button" data-stroke-style="dashed">Dash</button><button type="button" data-stroke-style="dotted">Dot</button></div><label class="af-range"><span>Width</span><input type="range" id="afStrokeWidth" min="0" max="30" value="0"><b id="afStrokeText">0pt</b></label></div></section><section class="af-panel af-layer-panel"><div class="af-layer-head"><div><strong>Layers</strong></div></div><div class="af-artboard-persistent-wrap-v10"><button type="button" id="afPersistentArtboardRowV10" class="af-persistent-artboard-row-v10" aria-expanded="true"><span class="af-persistent-arrow-v10">▾</span><span class="af-persistent-thumb-v10" aria-hidden="true"></span><span class="af-persistent-name-v10">Artboard1</span><span class="af-persistent-count-v10">0 layers</span></button></div><div class="af-layer-list" id="afLayerList"></div><div class="af-layer-foot"><button type="button" id="afTrashBtn" class="af-trash-btn" title="삭제"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2Zm1 7h2v8h-2v-8Zm4 0h2v8h-2v-8ZM7 10h2v8H7v-8Zm-1 10h12l1-12H5l1 12Z" fill="currentColor"/></svg></button></div></section></aside></div></div></div><style>
+<div id="af-tutorial" data-au-owner="AFFINITY-UNIVERSE" data-au-build="AU-TUT-20260824-02" data-au-fingerprint="B640BFCA817E5101" data-au-distribution="protected" class="laundry-gothic" style="font-family:'LaundryGothic',sans-serif;"><div class="af-start" id="afStart"><div class="af-start-card"><div class="af-start-badge">AFFINITY UNIVERSE</div><h2>Mini Designer Tutorial</h2><p>도형 만들기, 컬러, 스트로크, 레이어, Export PNG까지<br>차근차근 먼저 익혀봐요.</p><button type="button" id="afStartBtn">튜토리얼 시작하기</button></div></div><div class="af-toast" id="afToast">Good Job!</div><div class="af-app"><header class="af-topbar"><section class="af-mission-top" id="afMissionCard"><div class="af-mission-kicker"><span>TODAY MISSION</span><b id="afMissionStep">1 / 24</b></div><div class="af-mission-body"><strong id="afMissionTitle">파일 이름 바꾸기</strong><span id="afMissionDesc">상단의 Untitled를 눌러 원하는 이름으로 바꿔보세요.</span></div></section><div class="af-top-actions"><button type="button" class="af-export" id="afExport">Export PNG</button></div></header><div class="af-workspace"><aside class="af-toolbar"><button type="button" class="af-tool active" data-tool="move" id="afMoveTool" title="Move Tool (V)"><svg viewBox="0 0 32 32"><path d="M7 3 L23 18 L15.5 18.8 L19.5 27.5 L15.6 29.2 L11.6 20.5 L7 26 Z" fill="#050505" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></button><div class="af-shape-wrap"><button type="button" class="af-tool" data-tool="shape" id="afShapeTool" title="Shape Tool (U)"><span id="afShapeIcon" class="af-icon af-icon-rect"></span></button><div class="af-shape-menu" id="afShapeMenu"><button type="button" data-shape="rect"><span class="af-icon af-icon-rect"></span></button><button type="button" data-shape="circle"><span class="af-icon af-icon-circle"></span></button><button type="button" data-shape="round"><span class="af-icon af-icon-round"></span></button><button type="button" data-shape="triangle"><span class="af-icon af-icon-triangle"></span></button><button type="button" data-shape="star">★</button></div></div><div class="af-mini-targets"><button type="button" id="afMiniFill" class="active"></button><button type="button" id="afMiniStroke"></button></div></aside><main class="af-main"><div class="af-docbar"><input id="afFileName" type="text" value="Untitled" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" draggable="false"><span>@ 71%</span><em>V 무브툴 / U 도형툴 / ctrl(command)+Z / ctrl(command)+shift+Z / ctrl(command)+C,V / ctrl(command)+J / ctrl(command)+shift 드래그 / ctrl(command)+G / ctrl(command)+shift+G / 레이어 순서 단축키는 cmd(ctrl)+[ ], cmd(ctrl)+shift+[ ] 사용</em></div><div class="af-stage"><div class="af-artboard-wrap"><div class="af-artboard-label">Artboard1</div><div class="af-artboard" id="afArtboard"><div class="af-empty" id="afEmpty">도형 도구를 선택한 뒤<br>흰색 Artboard에서 드래그해보세요.</div><div class="af-drag-guide" id="afDragGuide"><strong>드래그란?</strong><span>마우스를 누른 채 움직이고 원하는 위치에서 손을 떼는 동작이에요.</span><i></i></div><div class="af-guide-overlay" id="afGuideOverlay"></div></div></div></div><div class="af-bottombar"><div><strong id="afStatusStrong">Ready</strong><span id="afStatusText">튜토리얼을 시작해보세요.</span></div><div><span id="afSelectionInfo">No Selection</span><span id="afCoord">X:0 / Y:0</span></div></div></main><aside class="af-sidebar"><section class="af-panel af-top-panel"><div class="af-tabs"><button type="button" class="active" data-panel="colour">Colour</button><button type="button" data-panel="stroke">Stroke</button></div><div class="af-tab-body active" id="afColourPanel"><div class="af-colour-topline"><div class="af-colour-targets"><button type="button" id="afBigFill" class="active" title="면 색상"></button><button type="button" id="afBigStroke" title="선 색상"></button><button type="button" id="afNoColor" title="색상 없음"></button><button type="button" id="afEyedropperV41" class="af-eyedropper-v41" title="스포이드 (I) · 색상 가져오기" aria-label="스포이드" aria-pressed="false"><svg viewBox="0 0 36 36" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22.4 4.5a4.8 4.8 0 0 1 6.8 0l2.3 2.3a4.8 4.8 0 0 1 0 6.8l-4.2 4.2-9.1-9.1 4.2-4.2Z"/><path d="M21.5 11.7 9.7 23.5a5.3 5.3 0 0 0-1.4 2.5l-.9 3.4 3.4-.9a5.3 5.3 0 0 0 2.5-1.4l11.8-11.8"/><path d="m8.7 24.6 2.7 2.7"/></svg></button><button type="button" id="afEyedropperSampleV41" class="af-eyedropper-sample-v41" title="추출한 색상을 도형에 적용" aria-label="추출한 색상 적용"></button></div><div class="af-colour-hexbox"><span>#:</span><b id="afHexText">EBEBEB</b></div></div><div class="af-wheel-wrap"><div class="af-wheel-stage" id="afWheelStage"><canvas id="afWheelCanvas" width="290" height="290"></canvas><button type="button" id="afHuePointer" class="af-wheel-pointer af-hue-pointer" aria-label="Hue pointer"></button><button type="button" id="afTriPointer" class="af-wheel-pointer af-tri-pointer" aria-label="Triangle pointer"></button></div></div><label class="af-range"><span>Opacity</span><input type="range" id="afOpacity" min="0" max="100" value="100"><b id="afOpacityText">100%</b></label></div><div class="af-tab-body" id="afStrokePanel"><div class="af-stroke-row"><span>Style</span><button type="button" class="active" data-stroke-style="none">None</button><button type="button" data-stroke-style="solid">Solid</button><button type="button" data-stroke-style="dashed">Dash</button><button type="button" data-stroke-style="dotted">Dot</button></div><label class="af-range"><span>Width</span><input type="range" id="afStrokeWidth" min="0" max="30" value="0"><b id="afStrokeText">0pt</b></label></div></section><section class="af-panel af-layer-panel"><div class="af-layer-head"><div><strong>Layers</strong></div></div><div class="af-artboard-persistent-wrap-v10"><button type="button" id="afPersistentArtboardRowV10" class="af-persistent-artboard-row-v10" aria-expanded="true"><span class="af-persistent-arrow-v10">▾</span><span class="af-persistent-thumb-v10" aria-hidden="true"></span><span class="af-persistent-name-v10">Artboard1</span><span class="af-persistent-count-v10">0 layers</span></button></div><div class="af-layer-list" id="afLayerList"></div><div class="af-layer-foot"><button type="button" id="afTrashBtn" class="af-trash-btn" title="삭제"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2Zm1 7h2v8h-2v-8Zm4 0h2v8h-2v-8ZM7 10h2v8H7v-8Zm-1 10h12l1-12H5l1 12Z" fill="currentColor"/></svg></button></div></section></aside></div></div></div><style>
 .laundry-gothic {
   font-family: "LaundryGothic", sans-serif !important;
   font-weight: 400;
@@ -9691,6 +9691,10 @@ setTimeout(()=>{if(m().key==='toneColor')next('밝기와 진하기 조절 성공
 return true;
 };
 
+// Validate the actual Shift key throughout a physical creation gesture.
+function afV124StrictShiftGesture(started,maintained,ended,moved,width,height){
+ return !!(started&&maintained&&ended&&moved&&Math.min(width,height)>=12&&Math.abs(width-height)<=2);
+}
 // 도형을 드래그해서 만들 때 보이지 않는 문제를 막기 위해, 현재 활성화된 도형 자체를 실시간 프리뷰로 보여줍니다.
 art.addEventListener('pointerdown',function(e){
 const target=e.target;
@@ -9705,6 +9709,9 @@ const box=art.getBoundingClientRect();
 const sx=e.clientX-box.left;
 const sy=e.clientY-box.top;
 const el=createShape(shapeKind,sx,sy,2,2,true);
+const shiftMissionStart=m().key==='freeShapeBeforeFill';
+const shiftHeldAtStart=shiftMissionStart&&!!e.shiftKey;
+let shiftHeldThroughDrag=shiftHeldAtStart;
 el.classList.add('creating');
 el.style.pointerEvents='none';
 el.style.opacity='.92';
@@ -9717,6 +9724,7 @@ let y=ev.clientY-box.top;
 let dx=x-sx;
 let dy=y-sy;
 if(Math.abs(dx)>2||Math.abs(dy)>2)moved=true;
+if(shiftMissionStart&&!ev.shiftKey)shiftHeldThroughDrag=false;
 if(isShift(ev)){
 const s=Math.max(Math.abs(dx),Math.abs(dy));
 dx=(dx<0?-1:1)*s;
@@ -9743,7 +9751,7 @@ coord.textContent='W:'+Math.round(w)+' / H:'+Math.round(h);
 renderBox();
 }
 
-function finish(){
+function finish(ev){
 document.removeEventListener('pointermove',update,true);
 document.removeEventListener('pointerup',finish,true);
 el.style.pointerEvents='auto';
@@ -9756,6 +9764,12 @@ if(!moved && m().type==='silhouette'){
 say('클릭이 아니라 마우스를 꾸욱 누른 채 드래그해보세요.');
 }
 checkGuideDone();
+if(shiftMissionStart&&m().key==='freeShapeBeforeFill'){
+ const w=el.offsetWidth||parseFloat(el.style.width)||0;
+ const h=el.offsetHeight||parseFloat(el.style.height)||0;
+ const valid=afV124StrictShiftGesture(shiftHeldAtStart,shiftHeldThroughDrag,!!(ev&&ev.shiftKey),moved,w,h);
+ if(typeof window.__afCommitShiftGestureV124==='function')window.__afCommitShiftGestureV124(el,valid);
+}
 if(shapeKind==='rect'&&m().key==='makeRect')next('네모 생성 완료!');
 else if(m().key==='layerCreateStack'){
 try{if(objects().length>=3)next('레이어 쌓기 성공!');}catch(err){}
@@ -16098,6 +16112,7 @@ failSound=function(){afV113PlayErrorSound();};
 
 (function(){
 let sh=0,okn=0,last=-1,lock=0,gb=null,rt=0;
+let afMissionPraiseAllowed=false;
 const S=[
 {label:'Great!',src:successVoiceSources&&successVoiceSources[0]},
 {label:'Excellent!',src:successVoiceSources&&successVoiceSources[1]},
@@ -16226,9 +16241,9 @@ setTimeout(()=>{
   if(ok.el===el)ok.el=null;
 },life);
 }
-function ok(){
+function ok(force=false){
 let n=Date.now();
-if(n<lock||!S.length)return;
+if((n<lock&&!force)||!S.length)return;
 try{speechSynthesis&&speechSynthesis.cancel&&speechSynthesis.cancel()}catch(e){}
 oldOff();
 let i=Math.floor(Math.random()*S.length);
@@ -16666,14 +16681,10 @@ statusStrong.textContent='Shape Tool';
 statusText.textContent='원하는 모양을 고른 뒤 Shift를 누른 채 드래그하면 정비율로 만들어집니다.';
 }
 if(c.type==='silhouette'){
-missionDesc.textContent=c.animal==='bunny'
-?'오른쪽 위 샘플과 가이드를 보며 동그라미로 토끼를 채워보세요.'
-:'가이드를 보며 동그라미로 강아지 실루엣을 채워보세요.';
+const name=c.animal==='bunny'?'토끼':'강아지';
+missionDesc.textContent=name+'를 가이드를 참고해 모두 만든 뒤 상단의 통과 버튼을 눌러주세요.';
 statusStrong.textContent='Silhouette';
-statusText.textContent=c.animal==='bunny'
-?'오른쪽 위 샘플과 희미한 가이드를 보며 동그라미로 토끼를 채워보세요.'
-:'희미한 가이드를 보며 동그라미로 강아지 실루엣을 채워보세요.';
-statusText.textContent+=' 완성되면 상단의 통과 버튼을 눌러 다음 단계로 이동해주세요.';
+statusText.textContent='도형 하나마다 리액션이 나오지 않습니다. '+name+' 완성 후 통과를 누르면 미션이 완료됩니다.';
 }
 copyMissionCopied=false;
 fillTargetClicked=false;
@@ -16696,25 +16707,25 @@ let c=cur();
 if(c&&c.key==='freeShapeBeforeFill'&&!sh)return;
 clearTimeout(hint.t);
 if(mission<missions.length-1){
-try{celebrate(selected[0]||missionCard,msg||'미션 통과!')}catch(e){try{say0(msg||'미션 통과!')}catch(x){}}
-mission++;
-setTimeout(renderMission,900);
+ afMissionPraiseAllowed=true;
+ try{celebrate(selected[0]||missionCard,msg||'미션 통과!')}
+ catch(e){try{say0(msg||'미션 통과!')}catch(x){}}
+ finally{afMissionPraiseAllowed=false;}
+ mission++;
+ setTimeout(renderMission,900);
 }else setTimeout(()=>complete(),120)
 };
-function afSquare(el){
-if(!el)return false;
-let w=el.offsetWidth||parseFloat(el.style.width)||0,h=el.offsetHeight||parseFloat(el.style.height)||0,m=Math.max(12,Math.min(w,h));
-return Math.abs(w-h)<=Math.max(6,m*.12);
-}
-function afFinishFreeShape(el,held,tries){
-let z=cur();
-if(!z||z.key!=='freeShapeBeforeFill'||!el||!el.isConnected)return;
-if(el.classList&&el.classList.contains('creating')&&tries<40){setTimeout(()=>afFinishFreeShape(el,held,tries+1),60);return}
-if(sh)return;
-if(held||afSquare(el)){sh=1;next('Shift 도형 만들기 완료!')}
-else try{failSound();say('Shift를 누른 채 정비율로 만들어주세요.')}catch(e){}
-}
-const cs0=createShape;createShape=function(kind,x,y,w,h,creating){let c=cur(),held=keyState&&keyState.shift,el=cs0(kind,x,y,w,h,creating);if(c&&c.key==='freeShapeBeforeFill')setTimeout(()=>afFinishFreeShape(el,held,0),80);if(c&&c.type==='silhouette')setTimeout(()=>guide(cur()),0);return el};
+window.__afCommitShiftGestureV124=function(el,valid){
+ const z=cur();
+ if(!z||z.key!=='freeShapeBeforeFill'||!el||!el.isConnected||sh)return false;
+ if(!valid){try{say('Shift를 누른 채 충분히 드래그하여 정비율 도형을 만들어주세요.')}catch(e){}return false;}
+ sh=1;next('Shift 정비율 도형 만들기 완료!');return true;
+};
+const cs0=createShape;createShape=function(kind,x,y,w,h,creating){
+ const c=cur(),el=cs0(kind,x,y,w,h,creating);
+ if(c&&c.type==='silhouette')setTimeout(()=>guide(cur()),0);
+ return el;
+};
 const ex0=exportBtn&&exportBtn.onclick;if(exportBtn)exportBtn.onclick=function(e){let c=cur();if(c&&(c.key==='renameAfterSil'||c.key==='renameAfterPuppy')){e&&e.preventDefault&&e.preventDefault();say('먼저 파일 이름을 바꿔볼까요?');try{fileName.focus();fileName.select()}catch(x){}return}if(c&&c.type==='export')try{hideGuide()}catch(x){}return ex0?ex0.call(this,e):undefined};
 function go(k){clearTimeout(rt);rt=setTimeout(()=>{let i=missions.findIndex(x=>x&&x.key===k);if(i>=0){mission=i;renderMission()}},120)}
 fileName.addEventListener('keydown',e=>{let c=cur();if(c&&(e.key==='Enter'||e.key==='Tab')&&(c.key==='renameAfterSil'||c.key==='renameAfterPuppy')){e.preventDefault();go(c.key==='renameAfterSil'?'bunnyExport':'puppyExport')}},true);
@@ -16733,7 +16744,9 @@ let v=sm.querySelector('svg');if(v)v.style.cssText+=';animation:none!important;f
 }
 return r;
 };
-playSuccessVoice=()=>ok();cheer=()=>ok();celebrate=()=>ok();['afV98Ppororong','afV39PlayAudio','afV39PlaySuccessVoice','afV50PlayMissionCompleteSound','afV52PlayMissionCompleteSound'].forEach(k=>{try{window[k]=()=>ok()}catch(e){}});primeSuccessVoices=()=>{S.forEach(a=>{try{new Audio(a.src).load()}catch(e){}});try{FA.muted=true;let p=FA.play();if(p&&p.then)p.then(()=>{FA.pause();FA.currentTime=0;FA.muted=false}).catch(()=>{FA.muted=false;FA.load()});else{FA.pause();FA.currentTime=0;FA.muted=false}}catch(e){try{FA.muted=false;FA.load()}catch(x){}}};
+playSuccessVoice=()=>{if(afMissionPraiseAllowed)ok(true)};
+cheer=()=>{if(afMissionPraiseAllowed)ok(true)};
+celebrate=()=>{if(afMissionPraiseAllowed)ok(true)};['afV98Ppororong','afV39PlayAudio','afV39PlaySuccessVoice','afV50PlayMissionCompleteSound','afV52PlayMissionCompleteSound'].forEach(k=>{try{window[k]=()=>ok()}catch(e){}});primeSuccessVoices=()=>{S.forEach(a=>{try{new Audio(a.src).load()}catch(e){}});try{FA.muted=true;let p=FA.play();if(p&&p.then)p.then(()=>{FA.pause();FA.currentTime=0;FA.muted=false}).catch(()=>{FA.muted=false;FA.load()});else{FA.pause();FA.currentTime=0;FA.muted=false}}catch(e){try{FA.muted=false;FA.load()}catch(x){}}};
 complete=function(){hideCoach();missionStep.textContent='완료';missionTitle.textContent='100점!';missionDesc.textContent='그림을 모두 완성했어요. 다른 게임도 하러 가볼까요?';done();setTimeout(afShowFinalCtaV28,2850)};
 build();hideTips();btn();renderMission();guide(cur());
 })();
@@ -16954,19 +16967,7 @@ afV110RefreshControls();
    A newly matched, distinct circle can earn praise once; completion waits for the Pass button.
 */
 (function(){
-const afV122State={session:'',celebrated:new WeakSet(),celebratedTargets:new Set(),advancing:false,praiseTimer:0,audio:null};
-
 function afV122Cur(){try{return m&&m();}catch(e){return null;}}
-function afV122Session(cur){return cur&&cur.type==='silhouette'?String(mission||0)+':'+String(cur.animal||''):'';}
-function afV122ResetSession(cur){
-  const key=afV122Session(cur);
-  if(key!==afV122State.session){
-    afV122State.session=key;
-    afV122State.celebrated=new WeakSet();
-    afV122State.celebratedTargets=new Set();
-    afV122State.advancing=false;
-  }
-}
 function afV122Rect(el){try{return rectOf(el);}catch(e){return null;}}
 function afV122Intersect(a,b){
   const left=Math.max(a.left,b.left),top=Math.max(a.top,b.top);
@@ -17045,85 +17046,12 @@ snapToGuide=function(el,mode){
   return afV122SnapBefore?afV122SnapBefore.apply(this,arguments):false;
 };
 
-function afV122Great(target,label,done,total){
-  try{
-    const old=root.querySelector('#afV122PartPraise');
-    if(old)old.remove();
-    const word='Great!';
-    const el=document.createElement('div');
-    el.id='afV122PartPraise';
-    el.className='au-celebrate-v20';
-    el.setAttribute('role','status');
-    el.setAttribute('aria-live','polite');
-    el.setAttribute('aria-label',word);
-    const hues=[345,22,46,152,186,218,266,312];
-    Array.from(word).forEach((ch,i)=>{
-      const sp=document.createElement('span');
-      sp.className='au-celebrate-letter-v20';
-      sp.textContent=ch;
-      sp.style.setProperty('--i',String(i));
-      sp.style.setProperty('--h',String(hues[i%hues.length]));
-      el.appendChild(sp);
-    });
-    root.appendChild(el);
-    void el.offsetWidth;
-    requestAnimationFrame(()=>el.classList.add('show'));
-    clearTimeout(afV122State.praiseTimer);
-    afV122State.praiseTimer=setTimeout(()=>{try{if(el.isConnected)el.remove();}catch(e){}},1450);
-    try{sparkle(target||missionCard,20);}catch(e){}
-  }catch(e){}
-  try{
-    if(afV122State.audio){afV122State.audio.pause();afV122State.audio.currentTime=0;}
-    const src=successVoiceSources&&successVoiceSources[0];
-    if(src){const a=new Audio(src);a.preload='auto';a.volume=1;afV122State.audio=a;a.play().catch(()=>{});}
-  }catch(e){}
-  try{
-    if(statusStrong)statusStrong.textContent='Great!';
-    if(statusText)statusText.textContent=(label||'한 부분')+'이 실루엣에 맞았어요. '+done+' / '+total;
-  }catch(e){}
-}
-
-const afV122RenderMissionBefore=renderMission;
-renderMission=function(){
-  const result=afV122RenderMissionBefore.apply(this,arguments);
-  const cur=afV122Cur();
-  afV122ResetSession(cur);
-  return result;
-};
-
+/* Silhouette parts are visual guides only. No automatic praise or advance. */
 const afV122CheckBefore=checkGuideDone;
 checkGuideDone=function(){
-  const cur=afV122Cur();
-  if(!cur||cur.type!=='silhouette')return afV122CheckBefore?afV122CheckBefore.apply(this,arguments):undefined;
-  afV122ResetSession(cur);
-  let targets=[];let matched=[];
-  try{targets=guideTargets(cur.animal)||[];matched=getMatchedGuideIndices(cur.animal)||[];}catch(e){}
-  try{updateGuideState();}catch(e){}
-  const matchedPairs=afV122Assignments(cur.animal,null);
-  const matchedSet=new Set(matchedPairs.map(p=>p.t.index));
-  // One reward per actual circle AND guide part, never per re-grab or reassignment.
-  const newly=matchedPairs.filter(p=>!afV122State.celebrated.has(p.el)&&
-    !afV122State.celebratedTargets.has(p.t.index));
-  newly.forEach(p=>{
-    afV122State.celebrated.add(p.el);
-    afV122State.celebratedTargets.add(p.t.index);
-  });
-  if(newly.length){
-    const part=newly[newly.length-1];
-    const g=(guides[cur.animal]||[])[part.t.index]||{};
-    afV122Great(part.el,g.label||'도형',matchedSet.size,targets.length);
-  }
-  if(targets.length&&matchedSet.size>=targets.length){
-    afV122State.advancing=true;
-    if(statusStrong)statusStrong.textContent='실루엣 완성!';
-    if(statusText)statusText.textContent='잘했어요! 상단의 통과 버튼을 눌러 다음 단계로 이동해주세요.';
-    if(missionDesc)missionDesc.textContent=(animalNames[cur.animal]||'캐릭터')+' 만들기 완료! 상단의 통과 버튼을 눌러주세요.';
-  }else if(afV122State.advancing){
-    // If a placed circle is moved away, retract the completion prompt.
-    afV122State.advancing=false;
-    if(statusStrong)statusStrong.textContent='Silhouette';
-    if(statusText)statusText.textContent='가이드를 맞춰보세요. 완성되면 상단의 통과 버튼을 눌러주세요.';
-  }
+ const cur=afV122Cur();
+ if(!cur||cur.type!=='silhouette')return afV122CheckBefore?afV122CheckBefore.apply(this,arguments):undefined;
+ try{updateGuideState();}catch(e){}
 };
 })();
 
@@ -17582,6 +17510,7 @@ const eyeBtn=document.getElementById('afEyedropperV41');
 const eyeSample=document.getElementById('afEyedropperSampleV41');
 if(!eyeBtn)return;
 let eyeActive=false;
+let eyeLastColor=null;
 let eyePrevStrong='';
 let eyePrevText='';
 
@@ -17600,8 +17529,12 @@ return null;
 }
 function eyeSampleSet(color){
 if(!eyeSample)return;
-if(!color||color==='transparent')eyeSample.style.background='linear-gradient(135deg,#fff 0 44%,#ef4444 45% 55%,#fff 56% 100%)';
-else eyeSample.style.background=color;
+const normalized=eyeNormalize(color);
+if(normalized&&normalized!=='transparent')eyeLastColor=normalized;
+if(!color||normalized==='transparent')eyeSample.style.background='linear-gradient(135deg,#fff 0 44%,#ef4444 45% 55%,#fff 56% 100%)';
+else eyeSample.style.background=normalized||color;
+eyeSample.title=eyeLastColor?'추출한 색상 '+eyeLastColor+' 적용':'추출한 색상 적용';
+eyeSample.setAttribute('aria-label',eyeSample.title);
 }
 function eyeStatus(active,message){
 if(active){
@@ -17757,6 +17690,14 @@ eyeStop('색상을 가져왔어요: '+color);
 return true;
 }
 
+// Clicking the sampled-colour circle applies the saved paint to the active Fill/Stroke.
+if(eyeSample)eyeSample.addEventListener('click',function(e){
+ e.preventDefault();e.stopPropagation();
+ if(!eyeLastColor){try{say('먼저 스포이드로 색상을 추출해 주세요.')}catch(x){}return;}
+ const hadSelection=!!(selected&&selected.some(el=>el&&el.isConnected));
+ applyColor(eyeLastColor);
+ try{say(hadSelection?'선택한 도형에 추출 색상을 적용했어요.':'추출 색상을 현재 '+(activeTarget==='stroke'?'Stroke':'Fill')+' 색상으로 지정했어요.')}catch(x){}
+});
 // Button: target-level handler, with click fallback for browsers that synthesize clicks differently.
 let eyeLastToggle=0;
 function eyeToggleFromEvent(e){
@@ -21649,7 +21590,7 @@ html body #af-tutorial #afStart .af-start-card h2{
 #af-tutorial .af-eyedropper-sample-v41{
   position:absolute!important;left:101px!important;top:15px!important;width:29px!important;height:29px!important;border-radius:50%!important;
   background:#111827;border:2px solid #0b0d12!important;box-shadow:0 0 0 2px rgba(255,255,255,.28),inset 0 0 0 1px rgba(255,255,255,.10)!important;
-  pointer-events:none!important;z-index:49!important;
+  pointer-events:auto!important;cursor:pointer!important;z-index:49!important;padding:0!important;appearance:none!important;
 }
 #af-tutorial.af-eyedropper-mode-v41 #afArtboard,
 #af-tutorial.af-eyedropper-mode-v41 #afArtboard *{cursor:crosshair!important;}
