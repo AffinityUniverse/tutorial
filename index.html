@@ -18077,7 +18077,7 @@ eyeSampleSet(fill||'#EBEBEB');
       afFinalUpdateMultiStatus({ready:false,changed:0,total:afFinalMultiBaseline.size});
     }
   }catch(e){}
-})()
+})();
 
 /* AF_V125_SCOPED_FILL_VALIDATION_AND_GUIDED_FOCUS */
 (function(){
@@ -18159,7 +18159,9 @@ eyeSampleSet(fill||'#EBEBEB');
     }
   }
   function introFocus(){
-    if(start)root.classList.toggle('af-v125-intro-open',getComputedStyle(start).display!=='none');
+    if(!start)return;
+    const visible=getComputedStyle(start).display!=='none' && !start.hidden;
+    root.classList.toggle('af-v125-intro-open',visible);
   }
   function refreshFocus(){
     scheduledFrame=0;
@@ -18203,7 +18205,10 @@ eyeSampleSet(fill||'#EBEBEB');
     new MutationObserver(scheduleFocus).observe(art,{childList:true});
     if(start)new MutationObserver(introFocus).observe(start,{attributes:true,attributeFilter:['style','class']});
   }
-  if(startBtn)startBtn.addEventListener('click',()=>requestAnimationFrame(introFocus),false);
+  if(startBtn)startBtn.addEventListener('click',()=>{
+    root.classList.remove('af-v125-intro-open');
+    requestAnimationFrame(introFocus);
+  },false);
   introFocus();
   refreshFocus();
 })();
@@ -22062,6 +22067,11 @@ html body #af-tutorial #afStart .af-start-card h2{
 
 <!-- AF_V125_START_AND_ACTION_HIGHLIGHTS -->
 <style id="afV125UXStyles">
+html body #af-tutorial:not(.af-v125-intro-open) > .af-app {
+  filter:none!important;
+  -webkit-filter:none!important;
+  pointer-events:auto!important;
+}
 html body #af-tutorial.af-v125-intro-open > .af-app {
   filter:blur(12px)!important;
   -webkit-filter:blur(12px)!important;
