@@ -16704,7 +16704,7 @@ handleMission(c);
 };
 next=function(msg){
 let c=cur();
-if(c&&c.key==='freeShapeBeforeFill'&&!sh)return;
+if(c&&c.key==='freeShapeBeforeFill'&&!sh&&!window.__afPassBypassV126)return;
 clearTimeout(hint.t);
 if(mission<missions.length-1){
  afMissionPraiseAllowed=true;
@@ -16911,7 +16911,10 @@ afV110RefreshControls();
 pass.addEventListener('click',e=>{
 e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
 afV110CloseMenu();
-next('미션 완료!');
+// Manual Pass is an intentional skip; it must not depend on automatic validation.
+window.__afPassBypassV126=true;
+try{next('미션 완료!');}
+finally{window.__afPassBypassV126=false;}
 },true);
 finish.addEventListener('click',e=>{
 e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
@@ -17921,7 +17924,7 @@ eyeSampleSet(fill||'#EBEBEB');
   const afFinalNextBefore=next;
   next=function(msg){
     const cur=afFinalCur();
-    if(cur&&cur.key==='multiColor'){
+    if(cur&&cur.key==='multiColor'&&!window.__afPassBypassV126){
       const state=afFinalMultiState();
       afFinalUpdateMultiStatus(state);
       if(!state.ready){
@@ -18085,10 +18088,25 @@ eyeSampleSet(fill||'#EBEBEB');
   let fillSession='',fillBaseline=new Map(),scheduledFrame=0,lastWarning=0;
   const current=()=>typeof m==='function'?m():null;
   function isRectangle(el){return !!(el&&el.isConnected&&el.dataset&&['rect','round'].includes(el.dataset.kind));}
+  function normalizePaint(value){
+    const raw=String(value||'').trim();
+    if(!raw)return '';
+    try{
+      const probe=document.createElement('span');
+      probe.style.color=raw;
+      return (probe.style.color||raw).replace(/\s+/g,'').toLowerCase();
+    }catch(err){return raw.replace(/\s+/g,'').toLowerCase();}
+  }
   function currentFill(el){
     if(!el)return '';
-    try{return getComputedStyle(el).backgroundColor||el.style.backgroundColor||'';}
-    catch(err){return el.style.backgroundColor||'';}
+    let color='';
+    // Actual rectangles are SVG-backed. CSS forces the outer div transparent.
+    // The stored vector Fill is the correct source for task validation.
+    try{if(typeof afV90ReadFill==='function')color=afV90ReadFill(el)||'';}catch(err){}
+    if(!color)color=(el.dataset&&el.dataset.afFillColor)||
+      (el.style&&el.style.getPropertyValue('--af-fill-color'))||
+      (el.style&&(el.style.backgroundColor||el.style.background))||'';
+    return normalizePaint(color);
   }
   function rememberRectangles(){
     if(!current()||current().key!=='fillColor')return;
@@ -18114,7 +18132,7 @@ eyeSampleSet(fill||'#EBEBEB');
   const precedingNext=next;
   next=function(){
     const cur=current();
-    if(cur&&cur.key==='fillColor'&&!hasActuallyColouredRectangle()){
+    if(cur&&cur.key==='fillColor'&&!window.__afPassBypassV126&&!hasActuallyColouredRectangle()){
       if(Date.now()-lastWarning>800){
         lastWarning=Date.now();
         try{say('네모 도형을 먼저 선택한 뒤 Fill 색상을 실제로 바꿔주세요.');}catch(err){}
@@ -18123,6 +18141,36 @@ eyeSampleSet(fill||'#EBEBEB');
     }
     return precedingNext.apply(this,arguments);
   };
+  // Legacy paint handlers can call next before their final SVG/data sync.
+  // Check once more after the commit, without skipping unselected rectangles.
+  const oldApplyColor=applyColor;
+  applyColor=function(){
+    const wasFill=current()&&current().key==='fillColor'&&activeTarget==='fill';
+    if(wasFill){resetFillMissionIfChanged();rememberRectangles();}
+    const result=oldApplyColor.apply(this,arguments);
+    if(wasFill&&current()&&current().key==='fillColor'&&hasActuallyColouredRectangle()){
+      next('면 컬러 변경 성공!');
+    }
+    return result;
+  };
+  if(typeof afV73InstantApplyColor==='function'){
+    const oldInstantColor=afV73InstantApplyColor;
+    afV73InstantApplyColor=function(){
+      if(current()&&current().key==='fillColor'){
+        resetFillMissionIfChanged();
+        rememberRectangles();
+      }
+      return oldInstantColor.apply(this,arguments);
+    };
+  }
+  function finishPendingFill(){
+    if(current()&&current().key==='fillColor'&&hasActuallyColouredRectangle()){
+      next('면 컬러 변경 성공!');
+    }
+  }
+  document.addEventListener('pointerup',function(){
+    if(current()&&current().key==='fillColor')setTimeout(finishPendingFill,0);
+  },true);
   function layerFocus(cur){
     const key=cur&&cur.key||'',on=/^layerOrder(?:Down|Back|Up|Front|Menu)$/.test(key);
     try{if(typeof afV46EnsureTopMenus==='function')afV46EnsureTopMenus();}catch(err){}
